@@ -1,0 +1,246 @@
+.border{
+    border: red 1px solid;
+}
+
+body{
+    height: 100vh;
+    background-image: url('../img/fondo2.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+nav{
+    background-color:#212529;
+}
+
+header{
+    height: 100vh;
+    background-image: url('../img/fondo1.png');
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}
+
+a{
+    color: white;
+    text-decoration: none;
+}
+
+a:hover{
+    color: #5ccbd1;
+    transition: 0.4s;
+}
+
+.cuadro_center{
+    position: absolute;
+    width: 85vw;
+    height: 75vh;
+    margin-top:5%;
+    margin-left: 8vw;
+    background-color: #000000;
+    opacity: 0.6;
+}
+
+.cuadro_center_container{
+    position: absolute;
+    width: 75vw;
+    height: 65vh;
+    margin-top:6%;
+    margin-left: 11.5vw;
+}
+
+.cuadro_left{
+    position: absolute;
+    width: 35vw;
+    height: 75vh;
+    margin-top:5%;
+    margin-left:5vw;
+    background-color: #000000;
+    opacity: 0.6;
+}
+
+.cuadro_left_container{
+    position: absolute;
+    width: 31vw;
+    height: 70vh;
+    margin-top:6%;
+    margin-left:7vw;
+}
+
+.cuadro_right{
+    position: absolute;
+    width: 50vw;
+    height: 75vh;
+    background-color: #000000;
+    margin-top:5%;
+    margin-left: 45vw;
+    opacity: 0.6;
+}
+
+.cuadro_right_container{
+    position: absolute;
+    width: 45vw;
+    height: 65vh;
+    margin-top:7%;
+    margin-left: 47.5vw;
+    padding-right: 10px;
+
+}
+.scroll{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.texto{
+    font-size: 4vw;
+    background-color: transparent;
+    padding: 0px;
+    color:white;
+    position: absolute;
+    z-index: 1;
+    margin-top:3%;
+    margin-left: 14vw;
+    text-align: center;
+
+}
+.formulario{
+    width: 30vw;
+    position: absolute;
+    margin-left: 15vw;
+    z-index: 1;
+    text-align: center;
+    margin-top: 22vh;
+    margin-left: 10vw;
+}
+
+#foto_perfil_conf{
+    position: fixed;
+    width: 55vh;
+    margin-top: 5vh;
+    margin-left: 4vw;
+}
+
+.camera{
+    position: fixed;
+    margin-left: 23vw;
+    margin-top: 45vh;
+    font-size: 12vh;
+}
+
+#marca{
+    margin-left: 10px;
+    /* padding-right: 10vw; */
+}
+
+
+.icono_inicial{
+    height: 7vh;
+    margin-left: 10vw;
+}
+
+.foto_perfil{
+    height: 7vh;
+    border-radius: 100%;
+    /*margin-left: 165vh;*/
+}
+
+.opcion{
+    position: relative;
+    text-align: right;
+    margin-left: 38vw;
+}
+
+
+.iniciar_sesion{
+    text-align: right;
+    margin-left: 5vh;
+}
+
+.iniciar_sesion:hover{
+    transition: 0.4s;
+    font-size: 17px;
+}
+
+.foto_perfil:hover{
+    box-shadow: 0px 0px 2px 4px #767676;
+}
+
+
+.titulo_modulo{
+    font-size: 45px;
+    color: white;
+    text-align: center;
+}
+
+.titulo_prin{
+    /*color: #ffca2c;*/
+    color: #7ff8ff;
+    text-align: left;
+    font-size: 5vh;
+}
+
+.titulo{
+    color: white;
+    text-align: left;
+    font-size: 3vh;
+}
+
+.saber_mas{
+    font-size: 20px;
+}
+
+#nosotros{
+    background-image: url('../img/banner3.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+    text-align: right;
+}
+
+.margen1{
+    margin-top: 4vw;
+}
+
+
+.caja{
+    width: 60%;
+    margin: 15px;
+}
+
+.caja2{
+    width: 50%;
+    margin: 15px;
+}
+
+footer{
+    background-color: #212529;
+    color: white;
+}
+
+.mapa{
+    width: 500px;
+    height: 450px;
+}
+
+@media screen and (max-width:1200px){
+    .caja {
+        width: 100%;
+        /* margin: 20px; */
+    }
+}
+
+@media screen and (max-width:1200px){
+    .caja2 {
+        width: 100%;
+        /* margin: 20px; */
+    }
+}
+
+@media screen and (max-width:1200px){
+    .mapa {
+        width: 100%;
+        /* margin: 20px; */
+    }
+}
+

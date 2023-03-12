@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
         <title>Cash Inventory</title>
         <link rel="shortcut icon" href="img/favicon.ico">
-        <link rel="stylesheet" href="css/home.css">
+        <link rel="stylesheet" href="login.css">
     </head>
     <body>
         <header>
@@ -26,7 +26,7 @@
                             <a class="nav-link " href="#soluciones">Soluciones</a>
                             <a class="nav-link " href="#nosotros">Nosotros</a>
                             <a class="nav-link " href="#contactanos">Contactanos</a>
-                            <a href="login.php" class="btn btn-warning iniciar_sesion" role="button" data-bs-toggle="button">Iniciar sesion</a>
+                            <a href="login" class="btn btn-warning iniciar_sesion" role="button" data-bs-toggle="button">Iniciar sesion</a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                 <div class="caja">
                     <h2>SOLUCIONES</h2><br>
                     <h4>Con Cash Inventory nunca fue tan fácil gestionar tu inventario y controlar tus ventas</h4><br>
-                    <h4>A través de Cash Inventory podrá llevar un control exacto de los productos que tiene a la venta, consultar su precio e información, así mismo podrá registrar la venta del mismo para que la cantidad de existentes sea actualizada automáticamente.</h4><br>
+                    <h4>A través de C7ash Inventory podrá llevar un control exacto de los productos que tiene a la venta, consultar su precio e información, así mismo podrá registrar la venta del mismo para que la cantidad de existentes sea actualizada automáticamente.</h4><br>
                     <h4>¡No se preocupe!, nosotros le avisaremos cuando tenga pocas unidades, podrá ver cuales son los productos más vendidos, llevar un control minusioso de sus vendedores y tener organizada su bodega.</h4><br>
                     <h4>Cash Inventory es lo que necesita su negocio.</h4>
                 </div>

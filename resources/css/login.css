@@ -1,0 +1,77 @@
+body{
+    background-image: url('../img/fondo.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+a{
+    text-decoration: none;
+    color: #B0B0B0;
+    font-size: 15px;
+}
+a:hover{
+    color: green;
+    font-size: 16px;
+    transition: 0.3s;
+
+
+}
+
+.cuadro_login{
+    position: absolute;
+    width: 60vw;
+    height: 65vh;
+    background-color: #000000;
+    margin-top:14%;
+    margin-left: 20vw;
+    opacity: 0.6;
+}
+
+.cuadro_container_login{
+    position: absolute;
+    width: 60vw;
+    height: 65vh;
+    margin-top:14%;
+    margin-left: 20vw;
+}
+
+#login{
+    font-size: 4vw;
+    background-color: transparent;
+    padding: 0px;
+    color:white;
+    position: absolute;
+    z-index: 1;
+    margin-top:6%;
+    margin-left: 24vw;
+    text-align: center;
+
+}
+.formulario_login{
+    width: 30vw;
+    position: absolute;
+    margin-left: 15vw;
+    z-index: 1;
+    text-align: center;
+    margin-top: 27vh;
+
+}
+.cashinventoryLogo{
+    width: 30vw;
+    position: absolute;
+    margin-top:5vh;
+    margin-left:35vw;
+}
+.foto_perfil{
+    width: 55vh;
+    margin-top: 8vh;
+}
+
+.error{
+    color: white;
+    margin-top:6%;
+    margin-left: 24vw;
+    text-align: center;
+
+}
