@@ -10,7 +10,7 @@
 
     <body>
         <!-- ++++++++++++++++++++++++++++++ Banner +++++++++++++++++++++++++++++++ -->
-        <img src="img/banner.jpg" alt="" class="cashinventoryLogo">
+        <img src="/storage/img/banner.jpg" alt="" class="cashinventoryLogo">
 
         <!-- ++++++++++++++++++++++++++++++ Caja Semitrasparente +++++++++++++++++++++++++++++++ -->
         <div class="cuadro_login"></div>

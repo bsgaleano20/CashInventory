@@ -6,8 +6,8 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
         <title>Cash Inventory</title>
-        <link rel="shortcut icon" href="img/favicon.ico">
-        <link rel="stylesheet" href="login.css">
+        <link rel="shortcut icon" href="/storage/img/favicon.ico">
+        <link rel="stylesheet" href="/css/home.css">
     </head>
     <body>
         <header>
@@ -15,7 +15,7 @@
             <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
                 <div class="container-fluid">
                     <!-- ++++++++++++++++++++++++++++++ Marca y Logo +++++++++++++++++++++++++++++++  -->
-                    <img src="img/moneda.png" class="icono_inicial">
+                    <img src="/storage/img/moneda.png" class="icono_inicial">
                     <a class="navbar-brand" id="marca" href="#"> Cash Inventory</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -58,7 +58,7 @@
                     <h4>Cash Inventory es lo que necesita su negocio.</h4>
                 </div>
                 <div>
-                    <img src="img/vendedora1.png" width="90%">
+                    <img src="/storage/img/vendedora1.png" width="90%">
                 </div>
             </div>     
         </section>
@@ -69,7 +69,7 @@
             <br><br><br>
             <div class="container d-flex flex-row flex-wrap">
                 <div>
-                    <img src="img/vendedora2.png" width="100%">
+                    <img src="/storage/img/vendedora2.png" width="100%">
                 </div>
                 <br><br>
                 <div class="caja">

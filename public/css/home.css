@@ -4,7 +4,7 @@
 
 body{
     height: 100vh;
-    background-image: url('../img/fondo2.jpg');
+    background-image: url('/storage/img/fondo2.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -16,7 +16,7 @@ nav{
 
 header{
     height: 100vh;
-    background-image: url('../img/fondo1.png');
+    background-image: url('/storage/img/fondo1.png');
     background-repeat: no-repeat;
     background-attachment: scroll;
     background-size: cover;
@@ -190,7 +190,7 @@ a:hover{
 }
 
 #nosotros{
-    background-image: url('../img/banner3.jpg');
+    background-image: url('/storage/img/banner3.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
