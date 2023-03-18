@@ -18,9 +18,38 @@
 
         <!-- Id -->
         <div class="mt-4">
-            <x-input-label for="Id_user" :value="__('Identification')" />
-            <x-text-input id="Id_user" class="block mt-1 w-full" type="text" name="Id_user" :value="old('Id_user')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('Id_user')" class="mt-2" />
+            <x-input-label for="Id_usuario" :value="__('Identification')" />
+            <x-text-input id="Id_usuario" class="block mt-1 w-full" type="text" name="Id_usuario" :value="old('Id_usuario')" required autocomplete="Id_usuario" />
+            <x-input-error :messages="$errors->get('Id_usuario')" class="mt-2" />
+        </div>
+
+        <!-- celular -->
+        <div class="mt-4">
+            <x-input-label for="celular" :value="__('Celular')" />
+            <x-text-input id="celular" class="block mt-1 w-full" type="text" name="celular" :value="old('celular')" required autocomplete="celular" />
+            <x-input-error :messages="$errors->get('celular')" class="mt-2" />
+        </div>
+
+        <!-- direccion -->
+        <div class="mt-4">
+            <x-input-label for="direccion" :value="__('Dirección')" />
+            <x-text-input id="direccion" class="block mt-1 w-full" type="text" name="direccion" :value="old('direccion')" required autocomplete="direccion" />
+            <x-input-error :messages="$errors->get('direccion')" class="mt-2" />
+        </div>
+
+        <!-- ROL -->
+        <div class="mt-4">
+            <x-input-label for="Rol_id_rol" :value="__('Rol')" />
+            <select name="Rol_id_rol" id="Rol_id_rol" class="block mt-1 w-full" required autocomplete="direccion" >
+                @foreach ($roles as $rol)
+                    <option value="{{ $rol->Id_rol }}" 
+                        @if ($rol == old('Rol_id_rol'))
+                           selected="selected" 
+                        @endif>
+                        {{ $rol->nombre_rol }}</option>
+                @endforeach
+            </select>
+            <x-input-error :messages="$errors->get('Rol_id_rol')" class="mt-2" />
         </div>
 
         <!-- Password -->
