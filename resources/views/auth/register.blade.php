@@ -18,9 +18,9 @@
 
         <!-- Id -->
         <div class="mt-4">
-            <x-input-label for="Id_usuario" :value="__('Identification')" />
-            <x-text-input id="Id_usuario" class="block mt-1 w-full" type="text" name="Id_usuario" :value="old('Id_usuario')" required autocomplete="Id_usuario" />
-            <x-input-error :messages="$errors->get('Id_usuario')" class="mt-2" />
+            <x-input-label for="id" :value="__('Identification')" />
+            <x-text-input id="id" class="block mt-1 w-full" type="text" name="id" :value="old('id')" required autocomplete="id" />
+            <x-input-error :messages="$errors->get('id')" class="mt-2" />
         </div>
 
         <!-- celular -->
