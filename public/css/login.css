@@ -54,7 +54,7 @@ a:hover{
     margin-left: 15vw;
     z-index: 1;
     text-align: center;
-    margin-top: 27vh;
+    margin-top: 25vh;
 
 }
 .cashinventoryLogo{
@@ -62,10 +62,6 @@ a:hover{
     position: absolute;
     margin-top:5vh;
     margin-left:35vw;
-}
-.foto_perfil{
-    width: 55vh;
-    margin-top: 8vh;
 }
 
 .error{
