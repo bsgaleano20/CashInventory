@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "61ca92a6deb311a9941295416aed0f69",
+    "content-hash": "8a634710d51671bff090f84b5a7cc49b",
     "packages": [
         {
             "name": "brick/math",
@@ -1183,16 +1183,16 @@
         },
         {
             "name": "laravel/installer",
-            "version": "v4.4.3",
+            "version": "v4.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/installer.git",
-                "reference": "2a28747036450bc083ab08a8a8de510583245818"
+                "reference": "e3d3b3d73833662429dd0812e481a6fa39e8758f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/installer/zipball/2a28747036450bc083ab08a8a8de510583245818",
-                "reference": "2a28747036450bc083ab08a8a8de510583245818",
+                "url": "https://api.github.com/repos/laravel/installer/zipball/e3d3b3d73833662429dd0812e481a6fa39e8758f",
+                "reference": "e3d3b3d73833662429dd0812e481a6fa39e8758f",
                 "shasum": ""
             },
             "require": {
@@ -1234,9 +1234,9 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/installer/issues",
-                "source": "https://github.com/laravel/installer/tree/v4.4.3"
+                "source": "https://github.com/laravel/installer/tree/v4.5.0"
             },
-            "time": "2023-03-07T17:51:45+00:00"
+            "time": "2023-03-20T11:31:15+00:00"
         },
         {
             "name": "laravel/sanctum",

@@ -25,9 +25,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/home', function () {
-    return view('home');
-})->middleware(['auth', 'verified'])->name('home');
+Route::get('/administrador/home', function () {
+    return view('/administrador/home');
+})->middleware(['auth', 'verified'])->name('administrador');
 
 Route::get('/bodeguista/home', function () {
     return view('/bodeguista/home');
@@ -36,6 +36,10 @@ Route::get('/bodeguista/home', function () {
 Route::get('/vendedor/home', function () {
     return view('/vendedor/home');
 })->middleware(['auth', 'verified'])->name('vendedor');
+
+Route::get('/mi_perfil', function () {
+    return view('vistas_compartidas/mi_perfil');
+})->middleware(['auth', 'verified'])->name('mi_perfil');
 
 
 
