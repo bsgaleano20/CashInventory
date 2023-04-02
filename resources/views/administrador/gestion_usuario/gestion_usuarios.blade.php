@@ -19,7 +19,7 @@
                 <form action="{{ route('gestion_usuario.show') }}" method="post">
                     @csrf
                     <div class="input-group">
-                        <input type="text" name="id" class="form-control" placeholder="Usuario" value="{{ $busqueda }}">
+                        <input type="text" name="id" class="form-control" placeholder="Usuario" :value="old($busqueda)">
                         <select class="form-select" name="filtro">
                             <option value="id">Documento</option>
                             <option value="nombre_usuario">Nombre</option>

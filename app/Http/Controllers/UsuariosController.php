@@ -43,6 +43,7 @@ class UsuariosController extends Controller
     public function show(Request $request)
     {
         //Trayendo opciones de filtro de la vista
+        
         $busqueda = $request->get('id');
         $filtro = $request->get('filtro');
         
