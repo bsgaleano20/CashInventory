@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UsuariosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,24 @@ Route::get('/vendedor/home', function () {
 Route::get('/mi_perfil', function () {
     return view('vistas_compartidas/mi_perfil');
 })->middleware(['auth', 'verified'])->name('mi_perfil');
+
+
+
+
+// Gestion de Usuarios Controller
+
+// Route::get('/gestion_usuario', function () {
+//     return view('/administrador/gestion_usuario/gestion_usuarios');
+// })->middleware(['auth', 'verified'])->name('admin_gestion_usuario');
+
+Route::get('/gestion_usuario',[UsuariosController::class, 'index'])
+->middleware(['auth', 'verified'])->name('admin_gestion_usuario');
+
+Route::post('gestion_usuario',[UsuariosController::class, 'show'])
+->middleware(['auth', 'verified'])->name('gestion_usuario.show');
+
+
+
 
 
 
