@@ -26,7 +26,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        // Create 
+        // Create in auth controller - RegisteredUserController
     }
 
     /**
@@ -34,7 +34,7 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Store in auth controller - RegisteredUserController
     }
 
     /**
