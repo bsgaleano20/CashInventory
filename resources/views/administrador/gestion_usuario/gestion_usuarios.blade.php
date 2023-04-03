@@ -32,7 +32,7 @@
                 </form>
             </div>
             <div class="col-5">
-                <a class="btn btn-warning" role="button" href="crear_usuario.php"><i class="bi bi-person-plus-fill"></i> Crear usuario</a>
+                <a class="btn btn-warning" role="button" href="/crear_usuario"><i class="bi bi-person-plus-fill"></i> Crear usuario</a>
                 <a class="btn btn-warning" role="button" href="../home.php"><i class="bi bi-arrow-left-square-fill"></i> Volver al menú principal</a>
             </div>
 

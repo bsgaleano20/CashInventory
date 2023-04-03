@@ -56,15 +56,15 @@ class RegisteredUserController extends Controller
             'celular' => $request->celular,
             'direccion' => $request->direccion,
             'password' => Hash::make($request->password),
-            'habilitado_usuario' => $usuario_habilitado,
+            'habilitado_usuario' => $request->estado,
             'Rol_id_rol' => $request->Rol_id_rol,
 
         ]);
 
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect(RouteServiceProvider::Gestion_usuario);
     }
 }

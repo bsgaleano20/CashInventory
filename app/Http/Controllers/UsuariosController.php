@@ -26,7 +26,7 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        // Create 
     }
 
     /**

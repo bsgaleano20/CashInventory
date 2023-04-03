@@ -1,88 +1,148 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts/layout')
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+@section('title', "Cash Inventory | Crear Usuario")
+
+@section('content')
+
+<!-- ++++++++++++++++++++++++++++++ Caja semitransparente +++++++++++++++++++++++++++++++ -->
+    <div class="cuadro_center"></div>
+
+    <!-- ++++++++++++++++++++++++++++++ Contenedores Cajas semitransparentes +++++++++++++++++++++++++++++++ -->
+    <div class="cuadro_center_container">
+        <div class="row">
+            <!-- ++++++++++++++++++++++++++++++ TITULO +++++++++++++++++++++++++++++++ -->
+
+            <h1 class="titulo_modulo">USUARIOS</h1>
+            
+            <br><br><br><br>
+
+            <form action="{{ route('register') }}" method="POST">
+                @csrf
+                <div class="row text-center">
+                    <div class="col-6 form">
+
+                        <!-- Name -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person-fill"></i></span>
+                            {{-- <input type="text" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1"> --}}
+                            <x-text-input id="name" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                        </div>
+                        <x-input-error :messages="$errors->get('name')" class="text-warning" />
+
+                        <!-- Id -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-badge"></i></span>
+                            {{-- <input type="text" class="form-control" placeholder="Documento" aria-label="Text input with dropdown button"> --}}
+                            <x-text-input id="id" class="form-control" placeholder="Documento" type="text" name="id" :value="old('id')" required autocomplete="id" />
+                        </div>
+                        <x-input-error :messages="$errors->get('id')" class="text-warning" />
+
+                        <!-- Email Address -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope-fill"></i></span>
+                            {{-- <input type="text" class="form-control" placeholder="Correo" aria-describedby="basic-addon1"> --}}
+                            <x-text-input id="email" class="form-control" placeholder="Correo" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                        </div> 
+                        <x-input-error :messages="$errors->get('email')" class="text-warning" />
+
+                        <!-- celular -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
+                            {{-- <input type="text" class="form-control" placeholder="Telefono" aria-describedby="basic-addon1"> --}}
+                            <x-text-input id="celular" class="form-control" placeholder="Telefono" type="text" name="celular" :value="old('celular')" required autocomplete="celular" />
+                        </div>
+                        <x-input-error :messages="$errors->get('celular')" class="text-warning" />
+
+                        <!-- ROL -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-shield-fill-check"></i></span>
+                            {{-- <select class="form-select">
+                                <option selected>Rol</option>
+                                <option value="2">Administrador</option>
+                                <option value="3">Vendedor</option>
+                                <option value="4">Bodeguista</option>
+                            </select> --}}
+
+                            <select class="form-select" name="Rol_id_rol" id="Rol_id_rol" class="block mt-1 w-full" required autocomplete="direccion" >
+                                <option value="" hidden>Seleccione un Rol</option>
+                                @foreach ($roles as $rol)
+                                    <option value="{{ $rol->Id_rol }}" 
+                                        @if ($rol == old('Rol_id_rol'))
+                                           selected="selected" 
+                                        @endif>
+                                        {{ $rol->nombre_rol }}</option>
+                                @endforeach
+                            </select>    
+                        </div>
+                        <x-input-error :messages="$errors->get('Rol_id_rol')" class="text-warning" />
+                    </div>
+
+
+                    <div class="col-6">
+                        {{-- <img src="/storage/img/inventario.jpg" class="img_ref1" width="500px"> --}}
+
+                        <!-- Password -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-lock-fill"></i></span>
+                            {{-- <input type="text" class="form-control" placeholder="Contraseña" aria-describedby="basic-addon1"> --}}
+                            <x-text-input id="password" class="block mt-1 w-full"
+                                        type="password"
+                                        name="password"
+                                        class="form-control"
+                                        placeholder="Contraseña"
+                                        required autocomplete="new-password" />
+                        </div>
+                        <x-input-error :messages="$errors->get('password')" class="text-warning" />
+
+                        <!-- Confirm Password -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-lock-fill"></i></span>
+                            <x-text-input id="password_confirmation" class="block mt-1 w-full"
+                                type="password"
+                                class="form-control"
+                                placeholder="Confirmar contraseña"
+                                name="password_confirmation" required autocomplete="new-password" />
+                        </div>
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="text-warning" />
+
+                        <!-- Estado -->  
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-check"></i></i></span>
+                            <select class="form-select" name="estado" required  >
+                                <option Value="" selected hidden>Estado</option>
+                                <option value="A">Habilitado</option>
+                                <option value="I">Deshabilitado</option>
+                            </select>
+                        </div>
+                        <x-input-error :messages="$errors->get('estado')" class="text-warning" />
+
+                        <!-- Direccion -->  
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-map-fill"></i></span>
+                            {{-- <input type="text" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1"> --}}
+                            <x-text-input id="direccion" class="form-control" placeholder="Direccion" aria-describedby="basic-addon1" type="text" name="direccion" :value="old('direccion')" required autofocus autocomplete="direccion" />
+                        </div>
+                        <x-input-error :messages="$errors->get('direccion')" class="text-warning" />
+                        
+                        {{-- opciones --}}
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="row"><input type="submit" class="btn btn-warning" value="Guardar"></div>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-5">
+                                <div class="row"><a class="btn btn-warning" role="button" href="/gestion_usuario"> Volver</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
+    </div>
+<!-- ++++++++++++++++++++++++++++++ Scripts +++++++++++++++++++++++++++++++ -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script> -->
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/af-2.4.0/b-2.2.3/datatables.min.js"></script> -->
+    <script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Id -->
-        <div class="mt-4">
-            <x-input-label for="id" :value="__('Identification')" />
-            <x-text-input id="id" class="block mt-1 w-full" type="text" name="id" :value="old('id')" required autocomplete="id" />
-            <x-input-error :messages="$errors->get('id')" class="mt-2" />
-        </div>
-
-        <!-- celular -->
-        <div class="mt-4">
-            <x-input-label for="celular" :value="__('Celular')" />
-            <x-text-input id="celular" class="block mt-1 w-full" type="text" name="celular" :value="old('celular')" required autocomplete="celular" />
-            <x-input-error :messages="$errors->get('celular')" class="mt-2" />
-        </div>
-
-        <!-- direccion -->
-        <div class="mt-4">
-            <x-input-label for="direccion" :value="__('Dirección')" />
-            <x-text-input id="direccion" class="block mt-1 w-full" type="text" name="direccion" :value="old('direccion')" required autocomplete="direccion" />
-            <x-input-error :messages="$errors->get('direccion')" class="mt-2" />
-        </div>
-
-        <!-- ROL -->
-        <div class="mt-4">
-            <x-input-label for="Rol_id_rol" :value="__('Rol')" />
-            <select name="Rol_id_rol" id="Rol_id_rol" class="block mt-1 w-full" required autocomplete="direccion" >
-                @foreach ($roles as $rol)
-                    <option value="{{ $rol->Id_rol }}" 
-                        @if ($rol == old('Rol_id_rol'))
-                           selected="selected" 
-                        @endif>
-                        {{ $rol->nombre_rol }}</option>
-                @endforeach
-            </select>
-            <x-input-error :messages="$errors->get('Rol_id_rol')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ml-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+@endsection
