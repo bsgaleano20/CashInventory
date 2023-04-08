@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 
-@section('title', "Cash Inventory | Crear Producto")
+@section('title', "Cash Inventory | Editar Producto")
 
 @section('content')
 
@@ -16,7 +16,7 @@
                     
                     <br><br><br><br>
 
-                    <form action="{{ route('gestion_inventario.store') }}" method="POST">
+                    <form action="{{ route('gestion_inventario.update', $producto->id) }}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-6">
@@ -24,28 +24,28 @@
                                 <!-- Nombre del Producto -->
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-clipboard-fill"></i></span>
-                                    <input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" value="{{ $producto->nombre_producto }}" name="nombre" placeholder="Nombre del Producto" aria-describedby="basic-addon1">
                                 </div>
                                 <x-input-error :messages="$errors->get('nombre')" class="text-warning" /> 
 
                                 <!-- Descripcion del Producto -->
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-file-text-fill"></i></span>
-                                    <input type="text" class="form-control" name="descripcion" placeholder="Descripción" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" value="{{ $producto->descripcion_producto }}" name="descripcion" placeholder="Descripción" aria-describedby="basic-addon1">
                                 </div>
                                 <x-input-error :messages="$errors->get('descripcion')" class="text-warning" />  
 
                                 <!-- Codigo de Barras -->
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-upc-scan"></i></span>
-                                    <input type="text" class="form-control" name="codigo_barras" placeholder="Código Barras" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" value="{{ $producto->codigo_barras }}" name="codigo_barras" placeholder="Código Barras" aria-describedby="basic-addon1">
                                 </div>
                                 <x-input-error :messages="$errors->get('codigo_barras')" class="text-warning" />
 
                                 <!-- Precio Unitario -->
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-cash-stack"></i></span>
-                                    <input type="text" class="form-control" name="precio" placeholder="Valor unitario" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" value="{{ $producto->precio_unitario }}" name="precio" placeholder="Valor unitario" aria-describedby="basic-addon1">
                                 </div>
                                 <x-input-error :messages="$errors->get('precio')" class="text-warning" />    
                             </div>
@@ -54,21 +54,21 @@
                                 <!-- Proveedor -->
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-badge-fill"></i></span>
-                                    <input type="text" class="form-control" name="proveedor" placeholder="Proveedor" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" value="{{ $producto->Proveedor }}" name="proveedor" placeholder="Proveedor" aria-describedby="basic-addon1">
                                 </div>
                                 <x-input-error :messages="$errors->get('proveedor')" class="text-warning" />
 
                                 <!-- Cantidad en Tienda -->
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-shop"></i></span>
-                                    <input type="number" class="form-control" name="cantidad_t" placeholder="Cantidad en Tienda" aria-describedby="basic-addon1">
+                                    <input type="number" class="form-control" value="{{ $producto->cantidad_disponible_t }}" name="cantidad_t" placeholder="Cantidad en Tienda" aria-describedby="basic-addon1">
                                 </div>
                                 <x-input-error :messages="$errors->get('cantidad_t')" class="text-warning" />
 
                                 <!-- Cantidad en Bodega -->
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="basic-addon1"><i class="bi bi-archive-fill"></i></i></span>
-                                    <input type="number" class="form-control" name="cantidad_b" placeholder="Cantidad en Bodega" aria-describedby="basic-addon1">
+                                    <input type="number" class="form-control" value="{{ $producto->cantidad_disponible_b }}" name="cantidad_b" placeholder="Cantidad en Bodega" aria-describedby="basic-addon1">
                                 </div>
                                 <x-input-error :messages="$errors->get('cantidad_b')" class="text-warning" />
 

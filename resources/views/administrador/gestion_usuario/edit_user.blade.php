@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 
-@section('title', "Cash Inventory | Crear Usuario")
+@section('title', "Cash Inventory | Editar Usuario")
 
 @section('content')
 
@@ -16,16 +16,17 @@
             
             <br><br><br><br>
 
-            <form action="{{ route('register') }}" method="POST">
+            <form action="{{ route('gestion_usuario.update', $usuarios->id) }}" method="POST">
                 @csrf
                 <div class="row text-center">
+
                     <div class="col-6 form">
 
                         <!-- Name -->
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-file-person-fill"></i></span>
                             {{-- <input type="text" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1"> --}}
-                            <x-text-input id="name" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                            <x-text-input id="name" class="form-control" placeholder="Nombre" value="{{ $usuarios->nombre_usuario }}" aria-describedby="basic-addon1" type="text" name="name"/>
                         </div>
                         <x-input-error :messages="$errors->get('name')" class="text-warning" />
 
@@ -33,7 +34,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-person-badge"></i></span>
                             {{-- <input type="text" class="form-control" placeholder="Documento" aria-label="Text input with dropdown button"> --}}
-                            <x-text-input id="id" class="form-control" placeholder="Documento" type="text" name="id" :value="old('id')" required autocomplete="id" />
+                            <x-text-input disabled id="id" class="form-control" placeholder="Documento" value="{{ $usuarios->id }}" type="text" name="id" />
                         </div>
                         <x-input-error :messages="$errors->get('id')" class="text-warning" />
 
@@ -41,7 +42,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-envelope-fill"></i></span>
                             {{-- <input type="text" class="form-control" placeholder="Correo" aria-describedby="basic-addon1"> --}}
-                            <x-text-input id="email" class="form-control" placeholder="Correo" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                            <x-text-input id="email" class="form-control" placeholder="Correo" value="{{ $usuarios->email }}" type="email" name="email"/>
                         </div> 
                         <x-input-error :messages="$errors->get('email')" class="text-warning" />
 
@@ -49,7 +50,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone-fill"></i></span>
                             {{-- <input type="text" class="form-control" placeholder="Telefono" aria-describedby="basic-addon1"> --}}
-                            <x-text-input id="celular" class="form-control" placeholder="Telefono" type="text" name="celular" :value="old('celular')" required autocomplete="celular" />
+                            <x-text-input id="celular" class="form-control" placeholder="Telefono" value="{{ $usuarios->celular }}" type="text" name="celular" required autocomplete="celular" />
                         </div>
                         <x-input-error :messages="$errors->get('celular')" class="text-warning" />
 
@@ -67,8 +68,8 @@
                                 <option value="" hidden>Seleccione un Rol</option>
                                 @foreach ($roles as $rol)
                                     <option value="{{ $rol->Id_rol }}" 
-                                        @if ($rol == old('Rol_id_rol'))
-                                           selected="selected" 
+                                        @if ($rol->nombre_rol == $usuario_y_rol->nombre_rol)
+                                           selected
                                         @endif>
                                         {{ $rol->nombre_rol }}</option>
                                 @endforeach
@@ -109,9 +110,17 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-check"></i></i></span>
                             <select class="form-select" name="estado" required  >
-                                <option Value="" selected hidden>Estado</option>
-                                <option value="A">Habilitado</option>
-                                <option value="I">Deshabilitado</option>
+                                <option Value="" hidden>Estado</option>
+                                <option value="A" 
+                                    @if ($usuarios->habilitado_usuario == "A")
+                                        selected
+                                    @endif
+                                >Habilitado</option>
+                                <option value="I"
+                                    @if ($usuarios->habilitado_usuario == "I")
+                                    selected
+                                    @endif
+                                >Deshabilitado</option>
                             </select>
                         </div>
                         <x-input-error :messages="$errors->get('estado')" class="text-warning" />
@@ -120,12 +129,13 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="basic-addon1"><i class="bi bi-map-fill"></i></span>
                             {{-- <input type="text" class="form-control" placeholder="Nombre" aria-describedby="basic-addon1"> --}}
-                            <x-text-input id="direccion" class="form-control" placeholder="Direccion" aria-describedby="basic-addon1" type="text" name="direccion" :value="old('direccion')" required autofocus autocomplete="direccion" />
+                            <x-text-input id="direccion" class="form-control" placeholder="Direccion" value="{{ $usuarios->direccion }}" aria-describedby="basic-addon1" type="text" name="direccion"/>
                         </div>
                         <x-input-error :messages="$errors->get('direccion')" class="text-warning" />
                         
                         {{-- opciones --}}
                         <div class="row text-center">
+                            {{-- <div class="col-1"></div> --}}
                             <div class="col-1"></div>
 
                             <div class="col-4">
@@ -136,16 +146,20 @@
                             <div class="col-1"></div>
 
                             <div class="col-4">
-                                <div class="row"><a class="btn btn-warning" role="button" href="{{ route('gestion_usuario.index') }}"> Volver</a></div>
+                                <div class="row"><a class="btn btn-warning" role="button" href="/gestion_usuario"> Volver</a></div>
                             </div>
+
+                            {{-- <div class="col-3">
+                                <div class="row"><input class="btn btn-warning" type="reset" value="Borrar"></div>
+                            </div> --}}
                             
                         </div>
                     </div>
                     <br>
                     {{-- ALERT --}}
-                    @if (session('crear_usuario'))
+                    @if (session('editar_usuario'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('crear_usuario') }}
+                            {{ session('editar_usuario') }}
                         </div>
                         
                     @endif

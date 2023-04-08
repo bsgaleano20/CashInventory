@@ -44,10 +44,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'Rol_id_rol' => ['required', 'numeric'],
         ]);
-
-        $usuario_habilitado='A';
-
-        
+   
 
         $user = Usuario::create([
             'id' => $request->id,
@@ -65,6 +62,6 @@ class RegisteredUserController extends Controller
 
         // Auth::login($user);
 
-        return redirect(RouteServiceProvider::Gestion_usuario);
+        return redirect(RouteServiceProvider::CREAR_USUARIO)->with('crear_usuario', 'Usuario Creado Correctamente');
     }
 }

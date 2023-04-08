@@ -8,6 +8,12 @@
         <title>@yield('title', 'Cash Inventory')</title>
         <link rel="shortcut icon" href="/storage/img/favicon.ico">
         <link rel="stylesheet" href="../../css/main.css">
+
+        <!-- Incluir jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        
+        <!-- Tu archivo JavaScript 
+        <script src="ruta/a/tu/archivo.js"></script>-->
     </head>
     <body>
         <!-- ++++++++++++++++++++++++++++++ Navbar +++++++++++++++++++++++++++++++ -->
