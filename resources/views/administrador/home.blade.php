@@ -17,7 +17,8 @@
             <a class="btn btn-warning btn-lg" role="button" href="/gestion_usuario"><i class="bi bi-people-fill"></i> Gestión de usuarios</a>
             <a class="btn btn-warning btn-lg" role="button" href="/gestion_inventario"><i class="bi bi-archive-fill"></i> Inventario</a>
             <a class="btn btn-warning btn-lg" role="button" href="Reporte.php"><i class="bi bi-bar-chart-line-fill"></i> Reportes</a>
-            <a class="btn btn-warning btn-lg" role="button" href="autorizaciones/Autorizacion.php"><i class="bi bi-bookmark-check-fill"></i> Autorización de cambios </a>
+            <a class="btn btn-warning btn-lg" role="button" href="/autorizaciones"><i class="bi bi-bookmark-check-fill"></i> Autorización de cambios </a>
+            <a class="btn btn-warning btn-lg" role="button" href="/gestion_movimientos"><i class="bi bi-dropbox"></i> Movimientos de mercancia </a>
         </div>
     </div>
     <div class="cuadro_right_container scroll">

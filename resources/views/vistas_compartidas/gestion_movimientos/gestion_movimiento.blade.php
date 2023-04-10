@@ -1,6 +1,6 @@
 @extends('layouts/layout')
 
-@section('title', "Cash Inventory | Gestion de Inventario")
+@section('title', "Cash Inventory | Gestion de Movimientos")
 
 @section('content')
 
@@ -25,29 +25,26 @@
             <div class="cuadro_center_container">
                 <div class="row">
                     
-                    <!-- ++++++++++++++++++++++++++++++ USUARIOS +++++++++++++++++++++++++++++++ -->
-                    <h1 class="titulo_modulo">PRODUCTOS</h1><br>
+                    <!-- ++++++++++++++++++++++++++++++ MOVIMIENTOS +++++++++++++++++++++++++++++++ -->
+                    <h1 class="titulo_modulo">MOVIMIENTOS DE MERCANCIA</h1><br>
                     <!-- ++++++++++++++++++++++++++++++ OPCIONES +++++++++++++++++++++++++++++++ -->
                     <br> <br> <br>
                     <div class="col-7">
-                        <form action="/gestion_inventario" method="POST">
+                        <form action="/gestion_movimientos" method="POST">
                             @csrf
                             <div class="input-group">
-                                <input type="text" name="busqueda" id="busqueda" class="form-control" placeholder="Producto">
+                                <input type="text" name="busqueda" id="busqueda" class="form-control" placeholder="Movimiento">
                                 <select class="form-select" name="filtro">
                                     <option value="id">Id</option>
-                                    <option value="nombre_producto">Nombre</option>
-                                    <option value="codigo_barras">Codigo de barras</option>
-                                    <option value="precio_unitario">Precio</option>
-                                    <option value="cantidad_disponible_t">Cantidad en Tienda</option>
-                                    <option value="cantidad_disponible_b">Cantidad en Bodega</option>
+                                    <option value="nombre_movimiento">Nombre del Movimiento</option>
+                                    <option value="tipo_movimiento">Tipo de Movimiento</option>
                                 </select>
                                 <button type="submit" class="btn btn-warning" id="button-addon2">Buscar</button>
                             </div>
                         </form>            
                     </div>
                     <div class="col-5">
-                        <a class="btn btn-warning" role="button" href="/gestion_inventario/crear_producto"><i class="bi bi-clipboard2-plus-fill"></i></i> Crear producto</a>
+                        <a class="btn btn-warning" role="button" href="{{ route('gestion_movimiento.create', 'ruta'  ) }}"><i class="bi bi-truck-front-fill"></i> Crear Movimiento</a>
                         <a class="btn btn-warning" role="button" href="/administrador/home"><i class="bi bi-arrow-left-square-fill"></i> Volver al menú principal</a>
                     </div>
 
@@ -58,11 +55,11 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="eliminarProductoLabel">ELIMINAR PRODUCTO</h1>
+                                <h1 class="modal-title fs-5" id="eliminarProductoLabel">ELIMINAR MOVIMIENTO</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                ¿Desea eliminar este producto?
+                                ¿Desea eliminar este Movimiento?
                             </div>
                             <div class="modal-footer">
                                 {{-- CERRAR VENTANA --}}
@@ -78,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <!-- +++++++++++++++++++++++++++++++ TABLA ++++++++++++++++++++++++++++++++++++++++ -->
                     <div class="tabla scroll">
                         <table class="table table-light table-striped">
@@ -86,32 +83,31 @@
                                 <thead>
                                     <tr class="table-dark"> 
                                         <th class="table-dark" scope="col">Id</th>
-                                        <th class="table-dark" scope="col">Nombre</th>
-                                        <th class="table-dark" scope="col">Codigo de barras</th>
-                                        <th class="table-dark"scope="col">Precio Unitario</th>
-                                        <th class="table-dark"scope="col">Cantidad en Tienda</th>
-                                        <th class="table-dark"scope="col">Cantidad en Bodega</th>
+                                        <th class="table-dark" scope="col">Nombre del Movimiento</th>
+                                        <th class="table-dark" scope="col">Tipo del Movimiento</th>
                                         <th class="table-dark"scope="col">Editar</th>
+                                        <th class="table-dark"scope="col">Mas info</th>
                                         <th class="table-dark"scope="col">Eliminar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($productos as $producto)
+                                    @forelse ($movimientos as $movimiento)
                                         <tr class="table-light">
-                                            <td class="table-light">{{ $producto->id }}</td>
-                                            <td class="table-light">{{ $producto->nombre_producto }}</td>
-                                            <td class="table-light">{{ $producto->codigo_barras }}</td>
-                                            <td class="table-light">${{ + $producto->precio_unitario }}</td>
-                                            <td class="table-light">{{ $producto->cantidad_disponible_t }}</td>
-                                            <td class="table-light">{{ $producto->cantidad_disponible_b }}</td>
+                                            <td class="table-light">{{ $movimiento->id }}</td>
+                                            <td class="table-light">{{ $movimiento->nombre_movimiento }}</td>
+                                            <td class="table-light">{{ $movimiento->tipo_movimiento }}</td>
                                             <td class="table-light">
-                                                <form action="{{ route('gestion_inventario.edit', $producto->id)}}" method="GET">
+                                                <form action="{{ route('gestion_inventario.edit', $movimiento->id)}}" method="GET">
                                                     <button type="submit" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> Editar</button>
                                                 </form>
                                             </td>
                                             <td class="table-light">
-                                                <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarProducto" data-id="{{ $producto->id }}"><i class="bi bi-clipboard-x-fill"></i></i> Eliminar</a>
+                                                <button type="button" class="btn btn-info"><i class="bi bi-clipboard2-plus-fill"></i> Mas info</button>
                                             </td>
+                                            <td class="table-light">
+                                                <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarProducto" data-id="{{ $movimiento->id }}"><i class="bi bi-clipboard-x-fill"></i></i> Eliminar</a>
+                                            </td>
+                                            
                                                   
                                             
                                         </tr> 

@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\InventarioController;
+use App\Http\Controllers\MovimientosController;
+use App\Http\Controllers\ConsultaProductoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -86,6 +88,42 @@ Route::post('/gestion_inventario/editar_producto/{id}',[InventarioController::cl
 
 Route::post('/gestion_inventario/{id}',[InventarioController::class, 'destroy'])
 ->middleware(['auth', 'verified'])->name('gestion_inventario.destroy');
+
+
+
+// Gestion de Autorizaciones Controller
+
+Route::get('/autorizaciones', function () {
+    return view('/vistas_compartidas/autorizaciones/autorizacion');
+});
+
+
+// Gestion de Movimientos de mercancia Controller
+
+Route::get('/gestion_movimientos',[MovimientosController::class, 'index'])
+->middleware(['auth', 'verified'])->name('gestion_movimientos.index');
+
+Route::post('/gestion_movimientos',[MovimientosController::class, 'show'])
+->middleware(['auth', 'verified'])->name('gestion_movimientos.show');
+
+Route::get('/gestion_movimientos/crear_movimiento/{id}',[MovimientosController::class, 'create'])
+->middleware(['auth', 'verified'])->name('gestion_movimiento.create');
+
+Route::post('/gestion_movimientos/crear_movimiento',[MovimientosController::class, 'store'])
+->middleware(['auth', 'verified'])->name('gestion_movimiento.store');
+
+
+// Gestion de busqueda de productos para agregar a Movimientos de mercancia 
+
+Route::get('/gestion_movimientos/crear_movimiento/buscar_producto',[ConsultaProductoController::class, 'index'])
+->middleware(['auth', 'verified'])->name('consulta.producto.index');
+
+Route::post('/gestion_movimientos/crear_movimiento/buscar_producto',[ConsultaProductoController::class, 'show'])
+->middleware(['auth', 'verified'])->name('consulta.producto.show');
+
+
+
+
 
 
 Route::middleware('auth')->group(function () {
