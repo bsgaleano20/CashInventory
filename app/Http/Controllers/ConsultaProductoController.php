@@ -12,10 +12,11 @@ class ConsultaProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::query()
-            ->select("*")
-            ->where('id', "=", '1')
-            ->get();
+        // $productos = Producto::query()
+        //     ->select("*")
+        //     ->where('id', "=", '1')
+        //     ->get();
+        $productos = Producto::all();
         return view('/vistas_compartidas/gestion_movimientos/buscar_producto', compact('productos'));
     }
 

@@ -11,12 +11,12 @@
     <div class="cuadro_center_container">
         <div class="row">  
 
-            <h1 class="titulo_modulo">MOVIMIENTOS</h1>
+            <h1 class="titulo_modulo">MOVIMIENTOS / BUSCAR PRODUCTO</h1>
             
-            <br><br><br>
+            <br><br>
 
             <!-- ++++++++++++++++++++++++++++++ OPCIONES +++++++++++++++++++++++++++++++ -->
-            <br> <br> <br>
+            <br> <br> 
             <div class="col-9">
                 <form action="/gestion_movimientos/crear_movimiento/buscar_producto" method="POST">
                     @csrf
@@ -32,38 +32,40 @@
                 </form>            
             </div>
             <div class="col-3">
-                <a class="btn btn-warning" role="button" href="{{ route('gestion_movimiento.create', 'ruta') }}"><i class="bi bi-arrow-left-square-fill"></i> Volver a crear movimiento</a>
+                <a class="btn btn-warning" role="button" href="/gestion_movimientos/crear_movimiento"><i class="bi bi-arrow-left-square-fill"></i> Volver a crear movimiento</a>
             </div>
 
             <br><br><br>
-            <form action="{{ route('gestion_movimiento.create', $producto->id) }}" method="GET">
-                <table class="table table-light table-striped">
-                    <div class="btn-group me-2" role="group" aria-label="First group">
-                        <thead>
-                            <tr class="table-dark"> 
-                                <th class="table-dark" scope="col">Id</th>
-                                <th class="table-dark" scope="col">Nombre</th>
-                                <th class="table-dark" scope="col">Codigo de barras</th>
-                                <th class="table-dark"scope="col">Precio Unitario</th>
-                                <th class="table-dark"scope="col">Agregar Producto al movimiento de mercancia</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($productos as $producto)
-                                <tr class="table-light">
-                                    <td class="table-light">{{ $producto->id }}</td>
-                                    <td class="table-light">{{ $producto->nombre_producto }}</td>
-                                    <td class="table-light">{{ $producto->codigo_barras }}</td>
-                                    <td class="table-light">${{ + $producto->precio_unitario }}</td>
-                                    {{-- <td class="table-light"><button type="submit" class="btn btn-success"><i class="bi bi-bag-plus-fill"></i> Agregar</button></td> --}}
-                                </tr> 
-                            @empty
-                                
-                            @endforelse
-                                            
-                        </tbody>
-                    </div>
-                </table>
+            <form action="/gestion_movimientos/crear_movimiento" method="GET">
+                <div class="tabla scroll">
+                    <table class="table table-light table-striped">
+                        <div class="btn-group me-2" role="group" aria-label="First group">
+                            <thead>
+                                <tr class="table-dark"> 
+                                    <th class="table-dark" scope="col">Id</th>
+                                    <th class="table-dark" scope="col">Nombre</th>
+                                    <th class="table-dark" scope="col">Codigo de barras</th>
+                                    <th class="table-dark"scope="col">Precio Unitario</th>
+                                    <th class="table-dark"scope="col">Agregar Producto al movimiento de mercancia</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($productos as $producto)
+                                    <tr class="table-light">
+                                        <td class="table-light">{{ $producto->id }}</td>
+                                        <td class="table-light">{{ $producto->nombre_producto }}</td>
+                                        <td class="table-light">{{ $producto->codigo_barras }}</td>
+                                        <td class="table-light">${{ + $producto->precio_unitario }}</td>
+                                        <td class="table-light"><button type="submit" class="btn btn-success"><i class="bi bi-bag-plus-fill"></i> Agregar</button></td>
+                                    </tr> 
+                                @empty
+                                    
+                                @endforelse
+                                                
+                            </tbody>
+                        </div>
+                    </table>
+                </div>
                 <br><br><br><br>    
             </form>
         </div>

@@ -106,7 +106,10 @@ Route::get('/gestion_movimientos',[MovimientosController::class, 'index'])
 Route::post('/gestion_movimientos',[MovimientosController::class, 'show'])
 ->middleware(['auth', 'verified'])->name('gestion_movimientos.show');
 
-Route::get('/gestion_movimientos/crear_movimiento/{id}',[MovimientosController::class, 'create'])
+// Route::get('/gestion_movimientos/crear_movimiento/{id}',[MovimientosController::class, 'create'])
+// ->middleware(['auth', 'verified'])->name('gestion_movimiento.create');
+
+Route::get('/gestion_movimientos/crear_movimiento',[MovimientosController::class, 'create'])
 ->middleware(['auth', 'verified'])->name('gestion_movimiento.create');
 
 Route::post('/gestion_movimientos/crear_movimiento',[MovimientosController::class, 'store'])
@@ -115,10 +118,10 @@ Route::post('/gestion_movimientos/crear_movimiento',[MovimientosController::clas
 
 // Gestion de busqueda de productos para agregar a Movimientos de mercancia 
 
-Route::get('/gestion_movimientos/crear_movimiento/buscar_producto',[ConsultaProductoController::class, 'index'])
+Route::get('/gestion_movimientos/crear_movimiento/buscar_productos',[ConsultaProductoController::class, 'index'])
 ->middleware(['auth', 'verified'])->name('consulta.producto.index');
 
-Route::post('/gestion_movimientos/crear_movimiento/buscar_producto',[ConsultaProductoController::class, 'show'])
+Route::post('/gestion_movimientos/crear_movimiento/buscar_productos',[ConsultaProductoController::class, 'show'])
 ->middleware(['auth', 'verified'])->name('consulta.producto.show');
 
 

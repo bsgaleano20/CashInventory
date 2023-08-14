@@ -14,7 +14,7 @@ class MovimientosController extends Controller
      */
     public function index()
     {
-        //Busqueda de toda la tabla de productos
+        //Busqueda de toda la tabla de Movimientos
         $movimientos = Movimiento::all();
 
         return view('/vistas_compartidas/gestion_movimientos/gestion_movimiento', compact('movimientos'));
@@ -23,19 +23,37 @@ class MovimientosController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(String $id)
+    public function create()
     {
-        if ($id == 'ruta'){
-            $producto = Producto::find('1');
-            //Se retorna vista para crear producto
-            return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('id', 'producto'));
+        //query o consulta con los movimimientos temporales creados
+        $movimientos_temp = Movimiento::query()
+                ->select("*")
+                ->where('estado', "=", 'temporal')
+                ->get();
+
+        // Si no existen movimientos temporales en la base de datos crea un movimiento temporal y retorna la vista con el nombre del movimiento
+        // Si Existen movimientos temporales en la base de datos retorna la vista con el nombre del temporal existente
+        if(empty($movimientos_temp[0])){
+            $fecha = date("Ymdhis") ; //fecha y hora para tener un nombre de movimiento temporal único
+            $nombre_mov = "temp_" . $fecha;
+
+            $movmiento = Movimiento::create([
+                'nombre_movimiento' => $nombre_mov,
+                'tipo_movimiento' => 'Pending',
+                'estado'=> 'temporal',
+            ]) ;
+            //Se retorna vista para crear Movimiento
+            return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('nombre_mov'));
         }
         else{
-            $producto = Producto::find($id);
-            return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('id', 'producto')); 
+            //recorre el array de resultados que siempre será de 1 por lo que unicamente extrae el nombre del movimiento temporal
+            foreach($movimientos_temp as $movimiento_temp){
+                $nombre_mov = $movimiento_temp -> nombre_movimiento;
+            }
+            // $nombre_mov = ['nombre_movimiento' => $movimientos_temp];
+            return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('nombre_mov'));
         }
-
-        
+             
     }
 
     /**
@@ -44,6 +62,8 @@ class MovimientosController extends Controller
     public function store(Request $request)
     {
         return 'STORE';
+
+        // return view('/vistas_compartidas/gestion_movimientos/buscar_producto');
     }
 
     /**

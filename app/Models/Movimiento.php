@@ -12,6 +12,7 @@ class Movimiento extends Model
     protected $table = 'movimiento';
     protected $fillable = [
         'nombre_movimiento',
-        'tipo_movimiento'
+        'tipo_movimiento',
+        'estado'
     ];
 }
