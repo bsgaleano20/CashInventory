@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\DetalleMovimiento;
+use App\Models\Movimiento;
 
 class ConsultaProductoController extends Controller
 {
@@ -23,17 +25,53 @@ class ConsultaProductoController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id)
     {
-        //
+        // Crear Detalle movimiento con información temporal agregando el producto a la base de datos
+
+        // consulta en la BDD todos los registros temporales
+        $movimientos_temp = Movimiento::query()
+                ->select("*")
+                ->where('estado', "=", 'temporal')
+                ->get();
+
+        //Extrae el ID y nombre del movimiento temporal creado
+        foreach($movimientos_temp as $movimiento_temp){
+            $id_mov = $movimiento_temp -> id;
+        }
+
+        // consultamos si existen registos del mismo producto en la tabla de detalles para no duplicarlo
+        $query_detalle_mov = DetalleMovimiento::query()
+                ->select("*")
+                ->where('Producto_id_producto', '=', $id)
+                ->get();
+
+        // Si no existen registros en detallemovimiento con el mismo producto se crea uno nuevo
+        if(empty($query_detalle_mov[0])){
+            // Se crea un registro en la tabla de detalle movimiento de manera temporal
+            $detalle_movimiento_create = DetalleMovimiento::create([
+            'Movimiento_id_movimiento' => $id_mov,
+            'Producto_id_producto' => $id,
+            'cantidad_detalle_movimiento' => 0,
+            ]);
+            return redirect()->route("gestion_movimiento.create");
+        }
+        else{
+            return redirect()->route("gestion_movimiento.create")->with('producto_duplicado', 'Producto ya agregado, favor modifique la cantidad en la parte inferior');
+        }
+        
+        //Se retorna vista para crear Movimiento
+        // return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('nombre_mov', 'detalle_movimientos'))->with('producto_duplicado', 'Producto ya agregado, favor modifique la cantidad');
+        
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(string $id)
     {
-        //
+        // 
     }
 
     /**

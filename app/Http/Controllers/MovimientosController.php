@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Movimiento;
+use App\Models\DetalleMovimiento;
 use App\Models\Producto;
 
 
@@ -42,16 +43,46 @@ class MovimientosController extends Controller
                 'tipo_movimiento' => 'Pending',
                 'estado'=> 'temporal',
             ]) ;
-            //Se retorna vista para crear Movimiento
-            return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('nombre_mov'));
-        }
-        else{
-            //recorre el array de resultados que siempre será de 1 por lo que unicamente extrae el nombre del movimiento temporal
+
             foreach($movimientos_temp as $movimiento_temp){
+                $id_mov = $movimiento_temp -> id;
                 $nombre_mov = $movimiento_temp -> nombre_movimiento;
             }
+
+            // $detalle_movimientos = DetalleMovimiento::all();
+
+            $detalle_movimientos = DetalleMovimiento::select('producto.nombre_producto', 
+                'detallemovimiento.cantidad_detalle_movimiento',
+                'detallemovimiento.valor_detalle_movimiento',
+                'detallemovimiento.fecha_detalle_movimiento')
+                ->join('producto', 'detallemovimiento.Producto_id_producto', '=', 'producto.id')
+                ->where('detallemovimiento.Movimiento_id_movimiento', '=', $id_mov)
+                ->get();
+
+            //Se retorna vista para crear Movimiento
+            return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('nombre_mov', 'detalle_movimientos'));
+        }
+        else{
+
+            //recorre el array de resultados que siempre será de 1 por lo que unicamente extrae el nombre del movimiento temporal
+            foreach($movimientos_temp as $movimiento_temp){
+                $id_mov = $movimiento_temp -> id;
+                $nombre_mov = $movimiento_temp -> nombre_movimiento;
+            }
+
+            // $detalle_movimientos = DetalleMovimiento::all();
+
+            $detalle_movimientos = DetalleMovimiento::select('producto.nombre_producto',
+                'detallemovimiento.Movimiento_id_movimiento', 
+                'detallemovimiento.cantidad_detalle_movimiento',
+                'detallemovimiento.valor_detalle_movimiento',
+                'detallemovimiento.fecha_detalle_movimiento')
+                ->join('producto', 'detallemovimiento.Producto_id_producto', '=', 'producto.id')
+                ->where('detallemovimiento.Movimiento_id_movimiento', '=', $id_mov)
+                ->get();
+
             // $nombre_mov = ['nombre_movimiento' => $movimientos_temp];
-            return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('nombre_mov'));
+            return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('nombre_mov', 'detalle_movimientos'));
         }
              
     }

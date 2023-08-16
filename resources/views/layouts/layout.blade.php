@@ -7,7 +7,8 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
         <title>@yield('title', 'Cash Inventory')</title>
         <link rel="shortcut icon" href="/storage/img/favicon.ico">
-        <link rel="stylesheet" href="../../css/main.css">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        {{-- <link rel="stylesheet" href="../../css/main.css"> --}}
 
         <!-- Incluir jQuery -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -38,7 +39,8 @@
                     // };
                 
                 }} --}}
-                <a class="navbar-brand" id="marca" href="administrador/home">Cash Inventory</a>
+                {{-- <a class="navbar-brand" id="marca" href="administrador/home">Cash Inventory</a> --}}
+                <a class="navbar-brand" id="marca" href="{{ route('administrador') }}">Cash Inventory</a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <!-- ++++++++++++++++++++++++++++++ Itenms Navbar +++++++++++++++++++++++++++++++ -->

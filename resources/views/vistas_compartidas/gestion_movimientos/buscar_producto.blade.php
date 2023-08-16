@@ -56,7 +56,13 @@
                                         <td class="table-light">{{ $producto->nombre_producto }}</td>
                                         <td class="table-light">{{ $producto->codigo_barras }}</td>
                                         <td class="table-light">${{ + $producto->precio_unitario }}</td>
-                                        <td class="table-light"><button type="submit" class="btn btn-success"><i class="bi bi-bag-plus-fill"></i> Agregar</button></td>
+                                        <td class="table-light">
+                                            <form action="{{ route('consulta_producto.create', $producto->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success"><i class="bi bi-bag-plus-fill"></i> Agregar</button>
+                                            </form>
+                                            
+                                        </td>
                                     </tr> 
                                 @empty
                                     

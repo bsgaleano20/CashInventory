@@ -4,6 +4,13 @@
 
 @section('content')
 
+{{-- ALERT PRODUCTO DUPLICADO --}}
+@if (session('producto_duplicado'))
+    <div class="alert alert-warning" role="alert">
+        {{ session('producto_duplicado') }}
+    </div>
+@endif
+
     <!-- ++++++++++++++++++++++++++++++ Caja semitransparente +++++++++++++++++++++++++++++++ -->
     <div class="cuadro_center"></div>
 
@@ -72,13 +79,26 @@
                                 <tbody>
                                     <tr class="table-light">
                                         <td class="table-light"><input type="text" class="form-control" name="nombre_producto" placeholder="Producto" disabled></td>
-                                        <td class="table-light"><input type="number" class="form-control" name="cantidad_movimiento" placeholder="Cantidad a mover"></td>
-                                        <td class="table-light"><input type="number" class="form-control" name="valor_movimiento" placeholder="Valor total del producto"></td>
-                                        <td class="table-light"><input type="date" class="form-control" name="fecha_movimiento" placeholder="Fecha"></td>
-                                        <td class="table-light"><a role="button" class="btn btn-warning" href="/gestion_movimientos/crear_movimiento/buscar_productos" ><i class="bi bi-search"></i></a></td>
+                                        <td class="table-light"><input type="number" class="form-control" name="cantidad_movimiento" placeholder="Cantidad a mover" disabled></td>
+                                        <td class="table-light"><input type="number" class="form-control" name="valor_movimiento" placeholder="Valor total del producto" disabled></td>
+                                        <td class="table-light"><input type="date" class="form-control" name="fecha_movimiento" placeholder="Fecha" disabled></td>
+                                        <td class="table-light"><a role="button" class="btn btn-warning" href="/gestion_movimientos/crear_movimiento/buscar_productos"><i class="bi bi-search"></i></a></td>
                                         <td class="table-light"><button type="button" class="btn btn-success"><i class="bi bi-clipboard2-plus-fill"></i></button></td>
                                         <td class="table-light"><button type="button" class="btn btn-danger"><i class="bi bi-x-lg"></i></button></td>
-                                    </tr>                                                
+                                    </tr>
+                                    @forelse ($detalle_movimientos as $detalle_movimiento)
+                                        <tr class="table-light">
+                                            <td class="table-light"><input type="text" class="form-control" name="nombre_producto" value="{{ $detalle_movimiento->nombre_producto }}" disabled></td>
+                                            <td class="table-light"><input type="number" class="form-control" name="cantidad_movimiento" value="{{ $detalle_movimiento->cantidad_detalle_movimiento }}" ></td>
+                                            <td class="table-light"><input type="number" class="form-control" name="valor_movimiento" value="{{ $detalle_movimiento->valor_detalle_movimiento }}"></td>
+                                            <td class="table-light"><input type="date" class="form-control" name="fecha_movimiento" value="{{ $detalle_movimiento->fecha_detalle_movimiento }}"></td>
+                                            <td class="table-light"><a role="button" class="btn btn-warning" href="/gestion_movimientos/crear_movimiento/buscar_productos"><i class="bi bi-search"></i></a></td>
+                                            <td class="table-light"><button type="button" class="btn btn-success"><i class="bi bi-clipboard2-plus-fill"></i></button></td>
+                                            <td class="table-light"><button type="button" class="btn btn-danger"><i class="bi bi-x-lg"></i></button></td>
+                                        </tr>
+                                    @empty
+                                    
+                                    @endforelse
                                 </tbody>
                             </div>
                         </table>
