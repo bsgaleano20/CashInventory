@@ -70,31 +70,6 @@
                     </table>
                 </form>
 
-                 <!-- ++++++++++++++++++++ Ventana Emergente de eliminar producto +++++++++++++++++++++++ -->
-                 <div class="modal fade" id="eliminarProducto" tabindex="-1" aria-labelledby="eliminarProductoLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="eliminarProductoLabel">ELIMINAR PRODUCTO</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ¿Desea eliminar este producto del movimiento?
-                        </div>
-                        <div class="modal-footer">
-                            {{-- CERRAR VENTANA --}}
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-
-                            {{-- ELIMINAR PRODUCTO --}}
-                            <form action="{{ route('consulta_producto.destroy', ['id' => 1] ) }}" id="boton_eliminar" method="POST">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
-                            
-                        </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- ++++++++++++++++++++++++++++++ TABLA DE DETALLE MOVIMIENTOS +++++++++++++++++++++++++++++++ -->
                 <div class="tabla scroll">
@@ -135,10 +110,6 @@
                                             </td>
                                             <td class="table-light">
                                                 <button type="button" class="btn btn-danger"><i class="bi bi-x-lg"></i></button>
-                                                {{
-                                                    $producto_eliminar = array("Producto_id_producto"=>$detalle_movimiento->Producto_id_producto, "Movimiento_id_movimiento"=>$detalle_movimiento->Movimiento_id_movimiento );
-                                                }}
-                                                <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarProducto" data-id="{{ $producto_eliminar }}"><i class="bi bi-x-lg"></i></a>
                                             </td>
                                         </tr>
                                     </form>
@@ -167,19 +138,5 @@
     <!-- <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/af-2.4.0/b-2.2.3/datatables.min.js"></script> -->
     {{-- <script type="text/javascript" src="DataTables/datatables.min.js"></script> --}}
 
-    {{-- Se sobreescribe el ID que se envía en el modal para que el controlador reciba el id del elemento seleccionado  --}}
-    <script>
-        $(document).ready(function() { 
-            $('#eliminarProducto').on('show.bs.modal', function(event) {
-                var boton = $(event.relatedTarget); // Botón que disparó el modal
-                var id = boton.data('id'); // Extraer el ID del botón
-                var form = $('#boton_eliminar'); // Formulario de eliminación
-                var url = form.attr('action').replace(/(\d+)/, id); // Construir la URL de eliminación con el ID
-
-                console.log("ID: " + id);
-                form.attr('action', url); // Actualizar la URL del formulario
-            });
-        });
-    </script>
 
 @endsection
