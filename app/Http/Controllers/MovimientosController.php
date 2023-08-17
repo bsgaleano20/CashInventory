@@ -51,7 +51,9 @@ class MovimientosController extends Controller
 
             // $detalle_movimientos = DetalleMovimiento::all();
 
-            $detalle_movimientos = DetalleMovimiento::select('producto.nombre_producto', 
+            $detalle_movimientos = DetalleMovimiento::select('producto.nombre_producto',
+                'detallemovimiento.Producto_id_producto', 
+                'detallemovimiento.Movimiento_id_movimiento',
                 'detallemovimiento.cantidad_detalle_movimiento',
                 'detallemovimiento.valor_detalle_movimiento',
                 'detallemovimiento.fecha_detalle_movimiento')
@@ -73,6 +75,7 @@ class MovimientosController extends Controller
             // $detalle_movimientos = DetalleMovimiento::all();
 
             $detalle_movimientos = DetalleMovimiento::select('producto.nombre_producto',
+                'detallemovimiento.Producto_id_producto',
                 'detallemovimiento.Movimiento_id_movimiento', 
                 'detallemovimiento.cantidad_detalle_movimiento',
                 'detallemovimiento.valor_detalle_movimiento',
@@ -92,7 +95,7 @@ class MovimientosController extends Controller
      */
     public function store(Request $request)
     {
-        return 'STORE';
+        return 'rueba';
 
         // return view('/vistas_compartidas/gestion_movimientos/buscar_producto');
     }

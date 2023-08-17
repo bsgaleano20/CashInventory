@@ -69,9 +69,23 @@ class ConsultaProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(string $id)
+    public function store(Request $request, string $id)
     {
-        // 
+        //Se ejecutan validaciones den Backend para que se registre correctamente el producto
+        $request->validate([
+            'cantidad_movimiento' => ['required', 'numeric'],
+            'valor_movimiento' => ['numeric'],
+            'fecha_movimiento' => ['required'],
+        ]); 
+
+        // Se actualiza producto en la Base de datos
+        DetalleMovimiento::where('Producto_id_producto', $id)->update([
+            'cantidad_detalle_movimiento'=>$request->cantidad_movimiento,
+            'valor_detalle_movimiento'=>$request->valor_movimiento,
+            'fecha_detalle_movimiento'=>$request->fecha_movimiento,
+        ]);
+
+        return redirect()->route("gestion_movimiento.create")->with('detalle_producto', 'Movimiento de producto actualizado correctamente');
     }
 
     /**
@@ -105,7 +119,7 @@ class ConsultaProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
@@ -113,6 +127,17 @@ class ConsultaProductoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Buscar el producto por ID para eliminar
+        $registro = DetalleMovimiento::find($id);
+
+        if (!$registro) {
+            // Si no se encuentra Producto --NO DEBERIA EJECUTARSE
+            return redirect()->route("gestion_inventario.index")->with('eliminar_producto', 'No se pudo encontrar el producto a eliminar');
+        }
+        else{
+            // Si encuentra el producto
+            $registro->delete();
+            return redirect()->route("gestion_inventario.index")->with('eliminar_producto', 'Producto eliminado correctamente');
+        }
     }
 }

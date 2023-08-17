@@ -124,6 +124,12 @@ Route::post('/gestion_movimientos/crear_movimiento/buscar_productos',[ConsultaPr
 Route::post('/gestion_movimientos/crear_movimiento/buscar_productos/{id}',[ConsultaProductoController::class, 'create'])
 ->middleware(['auth', 'verified'])->name('consulta_producto.create');
 
+Route::get('/gestion_movimientos/crear_movimiento/buscar_productos/{id}',[ConsultaProductoController::class, 'store'])
+->middleware(['auth', 'verified'])->name('consulta_producto.store');
+
+Route::post('/gestion_movimientos/crear_movimiento/buscar_productos/eliminar/{id}',[ConsultaProductoController::class, 'destroy'])
+->middleware(['auth', 'verified'])->name('consulta_producto.destroy');
+
 
 
 
