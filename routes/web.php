@@ -5,6 +5,7 @@ use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ConsultaProductoController;
+use App\Http\Controllers\DetalleMovimientoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -111,6 +112,15 @@ Route::get('/gestion_movimientos/crear_movimiento',[MovimientosController::class
 
 Route::post('/gestion_movimientos/crear_movimiento',[MovimientosController::class, 'store'])
 ->middleware(['auth', 'verified'])->name('gestion_movimiento.store');
+
+Route::post('/gestion_movimientos/{id}',[MovimientosController::class, 'destroy'])
+->middleware(['auth', 'verified'])->name('gestion_movimiento.destroy');
+
+
+// Detalle Movimiento
+
+Route::post('/gestion_movimientos/detalle_movimiento/{id}',[DetalleMovimientoController::class, '__invoke'])
+->middleware(['auth', 'verified'])->name('detalle_movimiento.invoke');
 
 
 // Gestion de busqueda de productos para agregar a Movimientos de mercancia 

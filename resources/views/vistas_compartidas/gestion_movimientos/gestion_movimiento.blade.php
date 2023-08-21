@@ -4,17 +4,17 @@
 
 @section('content')
 
-{{-- ALERT PRODUCTO EDITADO --}}
-@if (session('editar_producto'))
+{{-- ALERT MOVIMIENTO CREADO --}}
+@if (session('crear_movimiento'))
     <div class="alert alert-success" role="alert">
-        {{ session('editar_producto') }}
+        {{ session('crear_movimiento') }}
     </div>
 @endif
 
-{{-- ALERT USUARIO ELIMINADO --}}
-@if (session('eliminar_producto'))
+{{-- ALERT MOVIMIENTO ELIMINADO --}}
+@if (session('eliminar_movimiento'))
     <div class="alert alert-success" role="alert">
-        {{ session('eliminar_producto') }}
+        {{ session('eliminar_movimiento') }}
     </div>
 @endif
 
@@ -50,12 +50,12 @@
 
                     <br><br><br>
 
-                    <!-- ++++++++++++++++++++ Ventana Emergente de eliminar producto +++++++++++++++++++++++ -->
-                    <div class="modal fade" id="eliminarProducto" tabindex="-1" aria-labelledby="eliminarProductoLabel" aria-hidden="true">
+                    <!-- ++++++++++++++++++++ Ventana Emergente de eliminar movimiento +++++++++++++++++++++++ -->
+                    <div class="modal fade" id="eliminarMovimiento" tabindex="-1" aria-labelledby="eliminarMovimientoLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="eliminarProductoLabel">ELIMINAR MOVIMIENTO</h1>
+                                <h1 class="modal-title fs-5" id="eliminarMovimientoLabel">ELIMINAR MOVIMIENTO</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -66,7 +66,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
 
                                 {{-- ELIMINAR PRODUCTO --}}
-                                <form action="{{ route('gestion_inventario.destroy', ['id' => 1] ) }}" id="boton_eliminar" method="POST">
+                                <form action="{{ route('gestion_movimiento.destroy', ['id' => 1] ) }}" id="boton_eliminar" method="POST">
                                     @csrf
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
                                 </form>
@@ -102,10 +102,13 @@
                                                 </form>
                                             </td>
                                             <td class="table-light">
-                                                <button type="button" class="btn btn-info"><i class="bi bi-clipboard2-plus-fill"></i> Mas info</button>
+                                                <form action="{{ route('detalle_movimiento.invoke', $movimiento->id) }}" method="post">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-info"><i class="bi bi-clipboard2-plus-fill"></i> Mas info</button>
+                                                </form>
                                             </td>
                                             <td class="table-light">
-                                                <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarProducto" data-id="{{ $movimiento->id }}"><i class="bi bi-clipboard-x-fill"></i></i> Eliminar</a>
+                                                <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarMovimiento" data-id="{{ $movimiento->id }}"><i class="bi bi-clipboard-x-fill"></i></i> Eliminar</a>
                                             </td>
                                             
                                                   
@@ -131,7 +134,7 @@
             {{-- Se sobreescribe el ID que se envía en el modal para que el controlador reciba el id del elemento seleccionado  --}}
             <script>
                 $(document).ready(function() { 
-                    $('#eliminarProducto').on('show.bs.modal', function(event) {
+                    $('#eliminarMovimiento').on('show.bs.modal', function(event) {
                         var boton = $(event.relatedTarget); // Botón que disparó el modal
                         var id = boton.data('id'); // Extraer el ID del botón
                         var form = $('#boton_eliminar'); // Formulario de eliminación

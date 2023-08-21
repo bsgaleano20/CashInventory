@@ -18,6 +18,20 @@
     </div>
 @endif
 
+{{-- ALERT PRODUCTO NO ELIMINADO --}}
+@if (session('producto_no_encontrado'))
+    <div class="alert alert-warning" role="alert">
+        {{ session('producto_no_encontrado') }}
+    </div>
+@endif
+
+{{-- ALERT PRODUCTO ELIMINADO --}}
+@if (session('producto_eliminado'))
+    <div class="alert alert-success" role="alert">
+        {{ session('producto_eliminado') }}
+    </div>
+@endif
+
     <!-- ++++++++++++++++++++++++++++++ Caja semitransparente +++++++++++++++++++++++++++++++ -->
     <div class="cuadro_center"></div>
 
@@ -51,17 +65,19 @@
                             <tbody>
                                 <tr class="table-light">
                                     <td class="table-light"><input type="text" class="form-control" name="nombre_temp" value="{{ $nombre_mov }}" disabled></td>
-                                    <td class="table-light"><input type="text" class="form-control" name="nombre_movimiento" placeholder="Nombre del Movimiento"></td>
+                                    <td class="table-light"><input type="text" class="form-control" name="nombre_movimiento" placeholder="Nombre del Movimiento" required></td>
+                                    <x-input-error :messages="$errors->get('nombre_movimiento')" class="text-warning" /> 
                                     <td class="table-light">
-                                        <select class="form-select" name="tipo_movimiento" id="tipo_movimiento">
+                                        <select class="form-select" name="tipo_movimiento" id="tipo_movimiento" required>
                                             <option value="" selected disabled hidden>Seleccione un tipo de movimiento</option>
                                             <option value="Tienda a Bodega">De Tienda a Bodega</option>
                                             <option value="Bodega a Tienda">De Bodega a Tienda</option>
                                             <option value="Ingreso">Nuevo Ingreso</option>
                                         </select>
                                     </td>
+                                    <x-input-error :messages="$errors->get('tipo_movimiento')" class="text-warning" /> 
                                     <td class="table-light">
-                                        <a class="btn btn-success" role="button" href="/gestion_movimientos"><i class="bi bi-check-circle-fill"></i></i> Guardar</a>
+                                        <button type="submit" class="btn btn-success" type="submit"><i class="bi bi-check-circle-fill"></i></i> Guardar</button>
                                         <a class="btn btn-warning" role="button" href="/gestion_movimientos"><i class="bi bi-arrow-left-square-fill"></i> Volver</a>
                                     </td>
                                 </tr>                                                      
@@ -104,12 +120,15 @@
                                             <td class="table-light"><input type="number" class="form-control" name="cantidad_movimiento" value="{{ $detalle_movimiento->cantidad_detalle_movimiento }}" ></td><x-input-error :messages="$errors->get('cantidad_movimiento')" class="text-warning" /> 
                                             <td class="table-light"><input type="number" class="form-control" name="valor_movimiento" value="{{ $detalle_movimiento->valor_detalle_movimiento }}"></td><x-input-error :messages="$errors->get('valor_movimiento')" class="text-warning" /> 
                                             <td class="table-light"><input type="date" class="form-control" name="fecha_movimiento" value="{{ $detalle_movimiento->fecha_detalle_movimiento }}"></td><x-input-error :messages="$errors->get('fecha_movimiento')" class="text-warning" /> 
-                                            <td class="table-light"><a role="button" class="btn btn-warning" href="/gestion_movimientos/crear_movimiento/buscar_productos"><i class="bi bi-search"></i></a></td>
+                                            <td class="table-light"></td>
                                             <td class="table-light">
                                                 <button type="submit" class="btn btn-success"><i class="bi bi-check2-square"></i></button>
                                             </td>
+                                    </form>
+                                    <form action="{{ route('consulta_producto.destroy', $detalle_movimiento->Producto_id_producto) }}" method="POST">
+                                        @csrf
                                             <td class="table-light">
-                                                <button type="button" class="btn btn-danger"><i class="bi bi-x-lg"></i></button>
+                                                <button type="submit" class="btn btn-danger"><i class="bi bi-x-lg"></i></button>
                                             </td>
                                         </tr>
                                     </form>

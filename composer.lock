@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8a634710d51671bff090f84b5a7cc49b",
+    "content-hash": "55d8006445070a8f28cac9d1d2bcad22",
     "packages": [
         {
             "name": "brick/math",
@@ -1183,26 +1183,27 @@
         },
         {
             "name": "laravel/installer",
-            "version": "v4.5.0",
+            "version": "v5.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/installer.git",
-                "reference": "e3d3b3d73833662429dd0812e481a6fa39e8758f"
+                "reference": "23f0628fd9c7e205fd3dcb0af9b97fe01eee6325"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/installer/zipball/e3d3b3d73833662429dd0812e481a6fa39e8758f",
-                "reference": "e3d3b3d73833662429dd0812e481a6fa39e8758f",
+                "url": "https://api.github.com/repos/laravel/installer/zipball/23f0628fd9c7e205fd3dcb0af9b97fe01eee6325",
+                "reference": "23f0628fd9c7e205fd3dcb0af9b97fe01eee6325",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.3|^8.0",
-                "symfony/console": "^4.0|^5.0|^6.0",
-                "symfony/process": "^4.2|^5.0|^6.0"
+                "laravel/prompts": "^0.1",
+                "php": "^8.1",
+                "symfony/console": "^6.0",
+                "symfony/process": "^6.0"
             },
             "require-dev": {
                 "phpstan/phpstan": "^1.10",
-                "phpunit/phpunit": "^8.0|^9.3"
+                "phpunit/phpunit": "^9.3"
             },
             "bin": [
                 "bin/laravel"
@@ -1234,9 +1235,57 @@
             ],
             "support": {
                 "issues": "https://github.com/laravel/installer/issues",
-                "source": "https://github.com/laravel/installer/tree/v4.5.0"
+                "source": "https://github.com/laravel/installer/tree/v5.0.3"
             },
-            "time": "2023-03-20T11:31:15+00:00"
+            "time": "2023-08-15T15:24:23+00:00"
+        },
+        {
+            "name": "laravel/prompts",
+            "version": "v0.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/prompts.git",
+                "reference": "d880a909df144a4bf5760ebd09aba114f79d9adc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/prompts/zipball/d880a909df144a4bf5760ebd09aba114f79d9adc",
+                "reference": "d880a909df144a4bf5760ebd09aba114f79d9adc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "illuminate/collections": "^10.0|^11.0",
+                "php": "^8.1",
+                "symfony/console": "^6.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5",
+                "pestphp/pest": "^2.3",
+                "phpstan/phpstan": "^1.10",
+                "phpstan/phpstan-mockery": "^1.1"
+            },
+            "suggest": {
+                "ext-pcntl": "Required for the spinner to be animated."
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Laravel\\Prompts\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/prompts/issues",
+                "source": "https://github.com/laravel/prompts/tree/v0.1.5"
+            },
+            "time": "2023-08-15T14:29:44+00:00"
         },
         {
             "name": "laravel/sanctum",

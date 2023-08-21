@@ -32,17 +32,28 @@ class MovimientosController extends Controller
                 ->where('estado', "=", 'temporal')
                 ->get();
 
+        // $movimientos_temp = Movimiento::where('estado', "=", 'temporal')
+        //         ->get();
+
         // Si no existen movimientos temporales en la base de datos crea un movimiento temporal y retorna la vista con el nombre del movimiento
         // Si Existen movimientos temporales en la base de datos retorna la vista con el nombre del temporal existente
         if(empty($movimientos_temp[0])){
+        // if(empty($movimientos_temp)){
             $fecha = date("Ymdhis") ; //fecha y hora para tener un nombre de movimiento temporal único
             $nombre_mov = "temp_" . $fecha;
 
-            $movmiento = Movimiento::create([
+            //se crea en la BDD un temporal para crear un movimiento
+            $movimiento = Movimiento::create([
                 'nombre_movimiento' => $nombre_mov,
                 'tipo_movimiento' => 'Pending',
                 'estado'=> 'temporal',
             ]) ;
+
+            // Realizamos busqueda nuevamente dado que creamos un registro en la BDD
+            $movimientos_temp = Movimiento::query()
+            ->select("*")
+            ->where('estado', "=", 'temporal')
+            ->get();
 
             foreach($movimientos_temp as $movimiento_temp){
                 $id_mov = $movimiento_temp -> id;
@@ -95,9 +106,20 @@ class MovimientosController extends Controller
      */
     public function store(Request $request)
     {
-        return 'rueba';
+        $request->validate([
+            'nombre_movimiento' => ['required'],
+            'tipo_movimiento' => ['required'],
+        ]);
 
-        // return view('/vistas_compartidas/gestion_movimientos/buscar_producto');
+        // Se actualiza producto en la Base de datos
+        $crear_movimiento = Movimiento::where('estado', 'temporal')->update([
+            'nombre_movimiento'=>$request->nombre_movimiento,
+            'tipo_movimiento'=>$request->tipo_movimiento,
+            'estado'=>'completado',
+        ]);
+
+        return redirect()->route("gestion_movimientos.index")->with('crear_movimiento', 'Movimiento de productos creado correctamente');
+
     }
 
     /**
@@ -146,6 +168,23 @@ class MovimientosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Verificar si el ID es válido
+        if (!is_numeric($id) || $id <= 0) {
+            return redirect()->route("gestion_movimientos.index")->with('eliminar_movimiento', 'El ID del producto proporcionado no es válido');
+        }
+        else{
+            // Buscar el producto por ID para eliminar
+            $registro = Movimiento::find($id);
+
+            if (!$registro) {
+                // Si no se encuentra Producto --NO DEBERIA EJECUTARSE
+                return redirect()->route("gestion_movimientos.index")->with('eliminar_movimiento', 'No se pudo encontrar el producto a eliminar');
+            }
+            else{
+                // Si encuentra el producto
+                $registro->delete();
+                return redirect()->route("gestion_movimientos.index")->with('eliminar_movimiento', 'Producto eliminado correctamente');
+            }
+        }
     }
 }

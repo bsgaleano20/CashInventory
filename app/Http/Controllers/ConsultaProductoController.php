@@ -44,6 +44,7 @@ class ConsultaProductoController extends Controller
         $query_detalle_mov = DetalleMovimiento::query()
                 ->select("*")
                 ->where('Producto_id_producto', '=', $id)
+                ->where('Movimiento_id_movimiento', '=', $id_mov)
                 ->get();
 
         // Si no existen registros en detallemovimiento con el mismo producto se crea uno nuevo
@@ -127,17 +128,36 @@ class ConsultaProductoController extends Controller
      */
     public function destroy(string $id)
     {
-        // Buscar el producto por ID para eliminar
-        $registro = DetalleMovimiento::find($id);
+         // consulta en la BDD todos los registros temporales
+         $movimientos_temp = Movimiento::query()
+         ->select("*")
+         ->where('estado', "=", 'temporal')
+         ->get();
 
-        if (!$registro) {
+        //Extrae el ID y nombre del movimiento temporal creado
+        foreach($movimientos_temp as $movimiento_temp){
+            $id_mov = $movimiento_temp -> id;
+        }
+
+        // Buscar el producto por ID para eliminar
+        $query_detalle_mov = DetalleMovimiento::query()
+                ->select("*")
+                ->where('Producto_id_producto', '=', $id)
+                ->where('Movimiento_id_movimiento', '=', $id_mov)
+                ->get();
+
+        if (empty($query_detalle_mov[0])) {
             // Si no se encuentra Producto --NO DEBERIA EJECUTARSE
-            return redirect()->route("gestion_inventario.index")->with('eliminar_producto', 'No se pudo encontrar el producto a eliminar');
+            return redirect()->route("gestion_movimiento.create")->with('producto_no_encontrado', 'Producto no encontrado. favor revise nuevamente');
         }
         else{
             // Si encuentra el producto
-            $registro->delete();
-            return redirect()->route("gestion_inventario.index")->with('eliminar_producto', 'Producto eliminado correctamente');
+            // elimina el producto que cumpla con las 2 llaves foraneas
+            $delete = DetalleMovimiento::where('Producto_id_producto', '=', $id)
+            ->where('Movimiento_id_movimiento', '=', $id_mov)
+            ->delete();
+
+            return redirect()->route("gestion_movimiento.create")->with('producto_eliminado', 'Producto eliminado correctamente');
         }
     }
 }
