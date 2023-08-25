@@ -50,13 +50,13 @@
             <div class="row">
 
                 <!-- ++++++++++++++++++++++++++++++ TABLA DE MOVIMIENTOS +++++++++++++++++++++++++++++++ -->
-                <form action="{{ route('gestion_movimiento.store') }}" method="POST">
+                <form action="{{ route('gestion_movimiento.update', $movimiento->id) }}" method="POST">
                     @csrf
                     <table class="table table-light table-striped">
                         <div class="btn-group me-2" role="group" aria-label="First group">
                             <thead>
                                 <tr class="table-dark">
-                                    <th class="table-dark" scope="col">ID Temporal del Movimiento</th> 
+                                    <th class="table-dark" scope="col">ID del Movimiento</th> 
                                     <th class="table-dark" scope="col">Nombre del Movimiento</th>
                                     <th class="table-dark" scope="col">Tipo del Movimiento</th>
                                     <th class="table-dark" scope="col">Opciones</th>
@@ -64,12 +64,12 @@
                             </thead>
                             <tbody>
                                 <tr class="table-light">
-                                    <td class="table-light"><input type="text" class="form-control" name="nombre_temp" value="{{ $nombre_mov }}" disabled></td>
-                                    <td class="table-light"><input type="text" class="form-control" name="nombre_movimiento" placeholder="Nombre del Movimiento" required></td>
+                                    <td class="table-light"><input type="text" class="form-control" name="nombre_temp" value="{{ $movimiento->id }}" disabled></td>
+                                    <td class="table-light"><input type="text" class="form-control" name="nombre_movimiento" value="{{ $movimiento->nombre_movimiento }}" required></td>
                                     <x-input-error :messages="$errors->get('nombre_movimiento')" class="text-warning" /> 
                                     <td class="table-light">
                                         <select class="form-select" name="tipo_movimiento" id="tipo_movimiento" required>
-                                            <option value="" selected disabled hidden>Seleccione un tipo de movimiento</option>
+                                            <option value="" selected disabled hidden>{{ $movimiento->tipo_movimiento }}</option>
                                             <option value="Tienda a Bodega">De Tienda a Bodega</option>
                                             <option value="Bodega a Tienda">De Bodega a Tienda</option>
                                             <option value="Ingreso">Nuevo Ingreso</option>
@@ -111,7 +111,7 @@
 
                                     <form action="{{ route('consulta_producto.index') }}" method="get">
                                         <td class="table-light">
-                                            <input type="hidden" name="id_movimiento_actualizar" value="crear_movimiento">
+                                            <input type="hidden" name="id_movimiento_actualizar" value="{{ $movimiento->id }}">
                                             <button type="submit" class="btn btn-warning"><i class="bi bi-search"></i></a>
                                         </td>
                                     </form>
@@ -129,15 +129,16 @@
                                             <td class="table-light"><input type="date" class="form-control" name="fecha_movimiento" value="{{ $detalle_movimiento->fecha_detalle_movimiento }}"></td><x-input-error :messages="$errors->get('fecha_movimiento')" class="text-warning" /> 
                                             {{-- id del movimiento que actualizará el detalle movimiento en la base de datos --}}
                                             <td class="table-light"><input type="hidden" name="Movimiento_id_movimiento" value="{{ $detalle_movimiento->Movimiento_id_movimiento }}" ></td>
-                                            <input type="hidden" name="store" value="creando"> 
+                                            <input type="hidden" name="store" value="editando"> 
                                             <td class="table-light">
                                                 <button type="submit" class="btn btn-success"><i class="bi bi-check2-square"></i></button>
                                             </td>
                                     </form>
+
                                     <form action="{{ route('consulta_producto.destroy', $detalle_movimiento->Producto_id_producto) }}" method="POST">
                                         @csrf
                                             <td class="table-light">
-                                                <input type="hidden" name="id_movimiento_eliminar" value="crear_movimiento">
+                                                <input type="hidden" name="id_movimiento_eliminar" value="{{ $movimiento->id }}">
                                                 <button type="submit" class="btn btn-danger"><i class="bi bi-x-lg"></i></button>
                                             </td>
                                         </tr>

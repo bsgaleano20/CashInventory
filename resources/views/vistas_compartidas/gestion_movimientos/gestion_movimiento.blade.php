@@ -97,7 +97,7 @@
                                             <td class="table-light">{{ $movimiento->nombre_movimiento }}</td>
                                             <td class="table-light">{{ $movimiento->tipo_movimiento }}</td>
                                             <td class="table-light">
-                                                <form action="{{ route('gestion_inventario.edit', $movimiento->id)}}" method="GET">
+                                                <form action="{{ route('gestion_movimiento.edit', $movimiento->id)}}" method="GET">
                                                     <button type="submit" class="btn btn-primary"><i class="bi bi-pencil-fill"></i> Editar</button>
                                                 </form>
                                             </td>

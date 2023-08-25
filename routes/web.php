@@ -116,6 +116,12 @@ Route::post('/gestion_movimientos/crear_movimiento',[MovimientosController::clas
 Route::post('/gestion_movimientos/{id}',[MovimientosController::class, 'destroy'])
 ->middleware(['auth', 'verified'])->name('gestion_movimiento.destroy');
 
+Route::get('/gestion_movimientos/editar_movimiento/{id}',[MovimientosController::class, 'edit'])
+->middleware(['auth', 'verified'])->name('gestion_movimiento.edit');
+
+Route::post('/gestion_movimientos/editar_movimiento/{id}',[MovimientosController::class, 'update'])
+->middleware(['auth', 'verified'])->name('gestion_movimiento.update');
+
 
 // Detalle Movimiento
 

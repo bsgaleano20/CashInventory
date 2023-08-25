@@ -59,6 +59,7 @@
                                         <td class="table-light">
                                             <form action="{{ route('consulta_producto.create', $producto->id) }}" method="POST">
                                                 @csrf
+                                                <input type="hidden" name="id_movimiento_actualizar" value="{{ $id_movimiento }}">
                                                 <button type="submit" class="btn btn-success"><i class="bi bi-bag-plus-fill"></i> Agregar</button>
                                             </form>
                                             

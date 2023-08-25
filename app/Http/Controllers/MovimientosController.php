@@ -36,7 +36,6 @@ class MovimientosController extends Controller
         //         ->get();
 
         // Si no existen movimientos temporales en la base de datos crea un movimiento temporal y retorna la vista con el nombre del movimiento
-        // Si Existen movimientos temporales en la base de datos retorna la vista con el nombre del temporal existente
         if(empty($movimientos_temp[0])){
         // if(empty($movimientos_temp)){
             $fecha = date("Ymdhis") ; //fecha y hora para tener un nombre de movimiento temporal único
@@ -75,6 +74,8 @@ class MovimientosController extends Controller
             //Se retorna vista para crear Movimiento
             return view('/vistas_compartidas/gestion_movimientos/crear_movimiento', compact('nombre_mov', 'detalle_movimientos'));
         }
+
+        // Si Existen movimientos temporales en la base de datos retorna la vista con el nombre del temporal existente
         else{
 
             //recorre el array de resultados que siempre será de 1 por lo que unicamente extrae el nombre del movimiento temporal
@@ -152,7 +153,21 @@ class MovimientosController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        $movimiento = Movimiento::find($id);
+
+        $detalle_movimientos = DetalleMovimiento::select('producto.nombre_producto',
+            'detallemovimiento.Producto_id_producto',
+            'detallemovimiento.Movimiento_id_movimiento', 
+            'detallemovimiento.cantidad_detalle_movimiento',
+            'detallemovimiento.valor_detalle_movimiento',
+            'detallemovimiento.fecha_detalle_movimiento')
+            ->join('producto', 'detallemovimiento.Producto_id_producto', '=', 'producto.id')
+            ->where('detallemovimiento.Movimiento_id_movimiento', '=', $id)
+            ->get();
+
+        // $nombre_mov = ['nombre_movimiento' => $movimientos_temp];
+        return view('/vistas_compartidas/gestion_movimientos/editar_movimiento', compact('detalle_movimientos', 'movimiento'));
     }
 
     /**
