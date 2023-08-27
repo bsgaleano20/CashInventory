@@ -175,7 +175,19 @@ class MovimientosController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nombre_movimiento' => ['required'],
+            'tipo_movimiento' => ['required'],
+        ]);
+
+        // Se actualiza producto en la Base de datos
+        $actualizar_movimiento = Movimiento::where('id', $id )->update([
+            'nombre_movimiento'=>$request->nombre_movimiento,
+            'tipo_movimiento'=>$request->tipo_movimiento,
+            'estado'=>'completado',
+        ]);
+
+        return redirect()->route("gestion_movimientos.index")->with('crear_movimiento', 'Movimiento de productos actualizado correctamente');
     }
 
     /**

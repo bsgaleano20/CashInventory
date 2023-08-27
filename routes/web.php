@@ -6,6 +6,7 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ConsultaProductoController;
 use App\Http\Controllers\DetalleMovimientoController;
+use App\Http\Controllers\AutorizacionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -94,9 +95,15 @@ Route::post('/gestion_inventario/{id}',[InventarioController::class, 'destroy'])
 
 // Gestion de Autorizaciones Controller
 
-Route::get('/autorizaciones', function () {
-    return view('/vistas_compartidas/autorizaciones/autorizacion');
-});
+Route::get('/autorizaciones',[AutorizacionController::class, 'index'])
+->middleware(['auth', 'verified'])->name('autorizacion.index');
+Route::get('/autorizaciones/historial',[AutorizacionController::class, 'show'])
+->middleware(['auth', 'verified'])->name('autorizacion.show');
+Route::get('/autorizaciones/{id}',[AutorizacionController::class, 'store'])
+->middleware(['auth', 'verified'])->name('autorizacion.store');
+Route::post('/autorizaciones/{id}',[AutorizacionController::class, 'update'])
+->middleware(['auth', 'verified'])->name('autorizacion.update');
+
 
 
 // Gestion de Movimientos de mercancia Controller
@@ -145,6 +152,8 @@ Route::get('/gestion_movimientos/crear_movimiento/buscar_productos/{id}',[Consul
 
 Route::post('/gestion_movimientos/crear_movimiento/buscar_productos/eliminar/{id}',[ConsultaProductoController::class, 'destroy'])
 ->middleware(['auth', 'verified'])->name('consulta_producto.destroy');
+
+
 
 
 

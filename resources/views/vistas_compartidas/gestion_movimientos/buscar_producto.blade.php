@@ -17,11 +17,11 @@
 
             <!-- ++++++++++++++++++++++++++++++ OPCIONES +++++++++++++++++++++++++++++++ -->
             <br> <br> 
-            <div class="col-9">
-                <form action="/gestion_movimientos/crear_movimiento/buscar_producto" method="POST">
+            <div class="col-10">
+                <form action="/gestion_movimientos/crear_movimiento/buscar_productos" method="POST">
                     @csrf
                     <div class="input-group">
-                        <input type="text" name="busqueda" id="busqueda" class="form-control" placeholder="Producto" required>
+                        <input type="text" name="busqueda" id="busqueda" class="form-control" placeholder="Producto">
                         <select class="form-select" name="filtro" required>
                             <option value="id">Id</option>
                             <option value="nombre_producto">Nombre</option>
@@ -31,8 +31,8 @@
                     </div>
                 </form>            
             </div>
-            <div class="col-3">
-                <a class="btn btn-warning" role="button" href="/gestion_movimientos/crear_movimiento"><i class="bi bi-arrow-left-square-fill"></i> Volver a crear movimiento</a>
+            <div class="col-2">
+                <a class="btn btn-warning" role="button" href="/gestion_movimientos"><i class="bi bi-arrow-left-square-fill"></i> Volver</a>
             </div>
 
             <br><br><br>
@@ -59,6 +59,7 @@
                                         <td class="table-light">
                                             <form action="{{ route('consulta_producto.create', $producto->id) }}" method="POST">
                                                 @csrf
+                                                <input type="hidden" name="id_usuario_logueado" value="{{ auth()->id() }}">  
                                                 <input type="hidden" name="id_movimiento_actualizar" value="{{ $id_movimiento }}">
                                                 <button type="submit" class="btn btn-success"><i class="bi bi-bag-plus-fill"></i> Agregar</button>
                                             </form>
@@ -67,8 +68,7 @@
                                     </tr> 
                                 @empty
                                     
-                                @endforelse
-                                                
+                                @endforelse                       
                             </tbody>
                         </div>
                     </table>

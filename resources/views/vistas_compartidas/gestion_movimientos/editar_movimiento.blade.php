@@ -40,8 +40,7 @@
         <div class="row">
             
 
-            <h1 class="titulo_modulo">MOVIMIENTOS</h1> 
-
+            <h1 class="titulo_modulo">MOVIMIENTOS</h1>
 
             <br><br>
 
