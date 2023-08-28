@@ -22,25 +22,19 @@
             <div class="container-fluid">
                 <!-- ++++++++++++++++++++++++++++++ Marca y Logo +++++++++++++++++++++++++++++++ -->
                 <img src="/storage/img/moneda.png" class="icono_inicial">
-                {{-- {{ 
-                    //Link al HOME
 
-                    // $rol = auth()-> user()->Rol_id_rol;
-                    // $ruta = "administrador/home";
-
-                    // if($rol == 1){
-                    //     $ruta="administrador/home";
-                    // }
-                    // elseif($rol == 2){
-                    //     $ruta="vendedor/home";
-                    // }
-                    // elseif($rol == 3){
-                    //     $ruta="bodeguista/home";
-                    // };
+                {{-- Link que lleva al home del proyecto dependiendo del rol --}}
                 
-                }} --}}
-                {{-- <a class="navbar-brand" id="marca" href="administrador/home">Cash Inventory</a> --}}
-                <a class="navbar-brand" id="marca" href="{{ route('administrador') }}">Cash Inventory</a>
+                @if(Auth::check())
+                    @if(Auth::user()->Rol_id_rol === 1)
+                        <a class="navbar-brand" id="marca" href="{{ route('administrador') }}">Cash Inventory</a>
+                    @elseif(Auth::user()->Rol_id_rol === 2)
+                        <a class="navbar-brand" id="marca" href="{{ route('vendedor') }}">Cash Inventory</a>
+                    @elseif(Auth::user()->Rol_id_rol === 3)
+                        <a class="navbar-brand" id="marca" href="{{ route('Bodeguista') }}">Cash Inventory</a>
+                    @endif
+                @endif
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <!-- ++++++++++++++++++++++++++++++ Itenms Navbar +++++++++++++++++++++++++++++++ -->
