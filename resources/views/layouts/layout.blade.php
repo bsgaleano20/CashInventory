@@ -31,7 +31,7 @@
                     @elseif(Auth::user()->Rol_id_rol === 2)
                         <a class="navbar-brand" id="marca" href="{{ route('vendedor') }}">Cash Inventory</a>
                     @elseif(Auth::user()->Rol_id_rol === 3)
-                        <a class="navbar-brand" id="marca" href="{{ route('Bodeguista') }}">Cash Inventory</a>
+                        <a class="navbar-brand" id="marca" href="{{ route('bodeguista') }}">Cash Inventory</a>
                     @endif
                 @endif
 
