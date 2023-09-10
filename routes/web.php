@@ -7,6 +7,7 @@ use App\Http\Controllers\MovimientosController;
 use App\Http\Controllers\ConsultaProductoController;
 use App\Http\Controllers\DetalleMovimientoController;
 use App\Http\Controllers\AutorizacionController;
+use App\Http\Controllers\BuscarProductoController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -158,8 +159,15 @@ Route::post('/gestion_movimientos/crear_movimiento/buscar_productos/eliminar/{id
 ->middleware(['auth', 'verified'])->middleware('role:1')->name('consulta_producto.destroy');
 
 
+// Modulo de ventas
 
+// Buscar producto
 
+Route::get('/buscar_productos',[BuscarProductoController::class, 'index'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('buscar_producto.index');
+
+Route::post('/buscar_productos',[BuscarProductoController::class, 'show'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('buscar_producto.show');
 
 
 

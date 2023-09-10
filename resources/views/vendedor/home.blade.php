@@ -19,7 +19,8 @@
             <div class="d-grid gap-2">
 
                 <!-- Button modal search product-->
-                <a class="btn btn-warning btn-lg" role="button" data-bs-toggle="modal" data-bs-target="#searchProduct"><i class="bi bi-search"></i> Consultar producto</a>
+                {{-- <a class="btn btn-warning btn-lg" role="button" data-bs-toggle="modal" data-bs-target="#searchProduct"><i class="bi bi-search"></i> Consultar producto</a> --}}
+                <a class="btn btn-warning btn-lg" role="button" href="{{ route('buscar_producto.index') }}"><i class="bi bi-search"></i> Consultar producto</a>
                 <a class="btn btn-warning btn-lg" role="button" href="historial.php"><i class="bi bi-clock-history"></i> Histotial de facturas</a>
                 <a class="btn btn-warning btn-lg" role="button"  data-bs-toggle="modal" data-bs-target="#eliminarUsuario"><i class="bi bi-x-circle"></i> Cancelar factura</a>
 
