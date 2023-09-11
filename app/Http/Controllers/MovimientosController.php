@@ -37,7 +37,6 @@ class MovimientosController extends Controller
 
         // Si no existen movimientos temporales en la base de datos crea un movimiento temporal y retorna la vista con el nombre del movimiento
         if(empty($movimientos_temp[0])){
-        // if(empty($movimientos_temp)){
             $fecha = date("Ymdhis") ; //fecha y hora para tener un nombre de movimiento temporal único
             $nombre_mov = "temp_" . $fecha;
 

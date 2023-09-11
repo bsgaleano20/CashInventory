@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Factura extends Model
 {
     use HasFactory;
+
+    protected $table = 'factura';
+    protected $fillable = [
+        'valor_total_factura',
+        'valor_recibido_factura',
+        'cambio_factura',
+        'estado',
+        'Vendedor_id_usuario'
+    ];
 }

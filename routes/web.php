@@ -8,6 +8,7 @@ use App\Http\Controllers\ConsultaProductoController;
 use App\Http\Controllers\DetalleMovimientoController;
 use App\Http\Controllers\AutorizacionController;
 use App\Http\Controllers\BuscarProductoController;
+use App\Http\Controllers\FacturaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,10 +44,12 @@ Route::get('/bodeguista/home', function () {
     return view('/bodeguista/home');
 })->middleware(['auth', 'verified'])->middleware('role:3')->name('bodeguista');
 
-Route::get('/vendedor/home', function () {
-    return view('/vendedor/home');
-})->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor');
+// Route::get('/vendedor/home', function () {
+//     return view('/vendedor/home');
+// })->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor');
 
+Route::get('/vendedor/home', [FacturaController::class, 'index'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor');
 
 Route::get('/mi_perfil', function () {
     return view('vistas_compartidas/mi_perfil');
@@ -160,6 +163,24 @@ Route::post('/gestion_movimientos/crear_movimiento/buscar_productos/eliminar/{id
 
 
 // Modulo de ventas
+
+Route::post('/vendedor/home', [FacturaController::class, 'edit'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.edit');
+
+Route::post('/vendedor/home/actualizar_producto', [FacturaController::class, 'update'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.update');
+
+Route::post('/vendedor/home/cambio', [FacturaController::class, 'show'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.show');
+
+Route::post('/vendedor/home/facturar', [FacturaController::class, 'store'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.store');
+
+Route::post('/vendedor/home/eliminar_producto', [FacturaController::class, 'create'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.create');
+
+Route::post('/vendedor/home/eliminar_factura/{id}', [FacturaController::class, 'destroy'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.destroy');
 
 // Buscar producto
 

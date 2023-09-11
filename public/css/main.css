@@ -220,6 +220,10 @@ a:hover{
     margin-left: 10px;
 }
 
+.full-height-btn {
+    height: 100%; /* Establece la altura del botón al 100% del contenedor */
+}
+
 .titulo_modulo{
     font-size: 45px;
     color: white;

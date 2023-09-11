@@ -4,9 +4,25 @@
 
 @section('content')
 
+
+
     <!-- ++++++++++++++++++++++++++++++ MODULO DE VENTAS +++++++++++++++++++++++++++++++ -->
 
     <div id="caja_venta">
+
+        {{-- ALERT PRODUCTO ACTUALIZADO --}}
+        @if (session('editar_producto'))
+        <div class="alert alert-success" role="alert">
+            {{ session('editar_producto') }}
+        </div>
+        @endif
+
+        {{-- ALERT PRODUCTO NO ENCONTRADO --}}
+        @if (session('agregar_producto'))
+        <div class="alert alert-warning" role="alert">
+            {{ session('agregar_producto') }}
+        </div>
+        @endif
 
         <!-- ++++++++++++++++++++++++++++++ CAJAS +++++++++++++++++++++++++++++++ -->
         <div class="cuadro_left_ventas"></div>
@@ -34,47 +50,27 @@
                     <h3 class="text-center texto_modulo">Tel: 3118654242 - 7451620</h3>
                 </div>
                 
+            </div>
+        </div>
 
-
-
-                <!------------------------- Modal search product ------------------------------->
-                <div class="modal fade" id="searchProduct" tabindex="-1" aria-labelledby="searchProductLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">Consultar Producto</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="input-group">   
-                                    <input type="text" class="form-control" placeholder="Codigo de barras">
-                                    <button type="button" class="btn btn-warning" id="button-addon2"><i class="bi bi-search"></i> Buscar</button>
-                                </div>
-                                <br>
-                                <table class="table table-light table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th class="table-dark" scope="col">Nombre</th>
-                                            <th class="table-dark"scope="col">Precio Unitario</th>
-                                            <th class="table-dark"scope="col">Cantidad en Tienda</th>
-                                            <th class="table-dark"scope="col">Cantidad en Bodega</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="table-light">
-                                            <td class="table-light">Block Cuadriculado</td>
-                                            <td class="table-light">$7.000</td>
-                                            <td class="table-light">80</td>
-                                            <td class="table-light">150</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
-                        </div>
-                    </div>
+        <!-- ++++++++++++++++++++ Ventana Emergente de eliminar producto +++++++++++++++++++++++ -->
+        <div class="modal fade" id="eliminarUsuario" tabindex="-1" aria-labelledby="eliminarUsuarioLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="eliminarUsuarioLabel">CANCELAR FACTURA</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Desea cancelar esta factura?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <form action="{{ route('vendedor.destroy', $id_fact) }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
                 </div>
             </div>
         </div>
@@ -85,66 +81,29 @@
         <div class="cuadro_right_white_container scroll">
             <div class="row">
                 <div class="col-9">
-                    <h3 class="text-center titulo_modulo_black">Factura #54376</h3><br>  
+                    <h3 class="text-center titulo_modulo_black">Factura #{{ $id_fact }}</h3><br>  
                 </div>
                 <div class="col-3 text-end">
-                <button class="btn btn-warning"><i class="bi bi-printer-fill"></i></button>
-                    <button class="btn btn-warning"><i class="bi bi-file-earmark-arrow-down-fill"></i></i></i> </button>
-                    <button class="btn btn-warning"><i class="bi bi-eraser-fill"></i></i></button>
+                    <button class="btn btn-warning"><i class="bi bi-printer-fill"></i></button>
+                    <button class="btn btn-warning"><i class="bi bi-file-earmark-arrow-down-fill"></i> </button>
                 </div>
             </div>
                 
             <!-- ++++++++++++++++++++++++++++++ MENU DE OPCIONES +++++++++++++++++++++++++++++++ -->
             <div class="row">
-                <div class="col-6">
-                    <div class="input-group">   
-                        <input type="text" class="form-control" placeholder="Codigo de barras">
-                        <button type="button" class="btn btn-warning" id="button-addon2"><i class="bi bi-cart-plus-fill"></i> Agregar Producto</button>
-                        
-                    </div>
-                </div>
-                <div class="col-3">
-                    <select class="form-select">
-                        <option selected>Metodo de pago</option>
-                        <option value="2">Efectivo</option>
-                        <option value="3">Tarjeta de Credito</option>
-                        <option value="4">Tarjeta Debito</option>
-                        <option value="5">Nequi</option>
-                        <option value="6">Daviplata</option>
-                    </select>
-                </div>
-
-                <div class="col-3">
-                    <select class="form-select">
-                        <option selected>Vendedor</option>
-                        <option value="2">1193149205</option>
-                        <option value="3">79427554</option>
-                        <option value="4">41308755</option>
-                        <option value="5">24164352</option>
-                    </select>
-                </div>
+                <div class="col-12">
+                    <form action="{{ route('vendedor.edit') }}" method="post">
+                        @csrf
+                        <input hidden name="id_factura" value="{{ $id_fact }}" >
+                        <div class="input-group">   
+                            <input type="text" name="codigo_barras" class="form-control" placeholder="Codigo de barras">
+                            <button type="submit" class="btn btn-warning" id="button-addon2"><i class="bi bi-cart-plus-fill"></i> Agregar Producto</button>
+                        </div>
+                    </form>    
+                </div>      
             </div>
     
             <br>
-
-            <!-- ++++++++++++++++++++ Ventana Emergente de eliminar producto +++++++++++++++++++++++ -->
-            <div class="modal fade" id="eliminarUsuario" tabindex="-1" aria-labelledby="eliminarUsuarioLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="eliminarUsuarioLabel">ELIMINAR PRODUCTO</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        ¿Desea eliminar este producto?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-danger">Eliminar</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- ++++++++++++++++++++++++++++++ TABLA DE PRODUCTOS EN FACTURA +++++++++++++++++++++++++++++++ -->
 
@@ -157,33 +116,41 @@
                         <th class="table-dark"scope="col">Cantidad</th>
                         <th class="table-dark"scope="col">Total</th>
                         <th class="table-dark"scope="col"></th>
+                        <th class="table-dark"scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table-light">
-                        <td class="table-light">788492808274</td>
-                        <td class="table-light">Block Cuadriculado</td>
-                        <td class="table-light text-end">$7.000</td>
-                        <td class="table-light"><input class="input_productos text-end" type="number" value="2"></td>
-                        <td class="table-light text-end">$14.000</td>
-                        <td class="table-light"><button type="button" data-bs-toggle="modal" data-bs-target="#eliminarUsuario" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></button></td>
-                    </tr>
-                    <tr class="table-light">
-                        <td class="table-light">788492808145</td>
-                        <td class="table-light">Marcador borrable NEGRO</td>
-                        <td class="table-light text-end">$5.000</td>
-                        <td class="table-light"><input class="input_productos text-end" type="number" value="4"></td>
-                        <td class="table-light text-end" >$20.000</td>
-                        <td class="table-light"><button type="button" data-bs-toggle="modal" data-bs-target="#eliminarUsuario" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></button></td>
-                    </tr>
-                    <tr class="table-light">
-                        <td class="table-light">788492800524</td>
-                        <td class="table-light">Sticky Notes x100 hojas</td>
-                        <td class="table-light text-end">$2.000</td>
-                        <td class="table-light"><input class="input_productos text-end" type="number" value="1"></td>
-                        <td class="table-light text-end">$2.000</td>
-                        <td class="table-light"><button type="button" data-bs-toggle="modal" data-bs-target="#eliminarUsuario" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></button></td>
-                    </tr>
+                    @foreach ($detalle_facturas as $detalle_factura)
+                        
+                            <tr class="table-light">
+                                <form action="{{ route('vendedor.update') }}" method="post">
+                                    @csrf
+                                    <input hidden name="id_producto" value="{{ $detalle_factura->Producto_id_producto }}">
+                                    <input hidden name="id_factura" value="{{ $detalle_factura->Factura_id_factura }}">
+                                    {{-- <input hidden name="id_factura" value="{{ $id_fact }}" > --}}
+                                    <td class="table-light">{{ $detalle_factura->codigo_barras }}</td>
+                                    <td class="table-light">{{ $detalle_factura->nombre_producto }}</td>
+                                    <td class="table-light text-end">${{ $detalle_factura->precio_unitario }}</td>
+                                    <input hidden name="precio_unitario" value="{{ $detalle_factura->precio_unitario }}">
+                                    <td class="table-light"><input class="input_productos text-end" type="number" name="cantidad_producto_factura" value="{{ $detalle_factura->cantidad_producto_factura }}"></td>
+                                    <td class="table-light text-end">${{ $detalle_factura->total }}</td>
+                                    <input hidden name="total_producto" value="{{ $detalle_factura->total }}">
+                                    <td class="table-light">
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="bi bi-check"></i></button>
+                                    </td>
+                                </form>
+                                <td class="table-light">
+                                    <form action="{{ route('vendedor.create') }}" method="post">
+                                        @csrf
+                                        <input hidden name="id_factura_eliminar" value="{{ $detalle_factura->Factura_id_factura }}">
+                                        <input hidden name="id_producto_eliminar" value="{{ $detalle_factura->Producto_id_producto }}">
+                                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                              
+                    @endforeach
+
                 </tbody>
             </table>
 
@@ -193,15 +160,21 @@
 
             <div class="row">
                 <div class="col-6">
-                    <table class="table table-light table-striped scroll">
+                    <table class="table table-light table-striped scroll" >
                         <tbody>
                             <tr>
-                                <td class="table-dark"scope="col">Valor recibido</td>
-                                <td class="table-light text-end"><input type="text" value="$42.840" class="input_cambio text-end"></td>
+                                <form action="{{ route('vendedor.show') }}" method="post">
+                                    @csrf
+                                    <input hidden name="id_factura" value="{{ $id_fact }}" >
+                                    <td class="table-dark"scope="col">Valor recibido</td>
+                                    <td class="table-light text-end"><input type="text" name="valor_recibido" placeholder="$0" class="input_cambio text-end"></td>
+                                    <td class="table-dark" rowspan="2"><button class="btn btn-success"><i class="bi bi-currency-dollar"></i></button></td>
+                                </form>
+                                        
                             </tr>
                             <tr>
                                 <td class="table-dark"scope="col">Valor cambio</td>
-                                <td class="table-light text-end"><input type="text" value="$0" class=" input_cambio text-end"></td>
+                                <td class="table-light text-end">{{ $valor_cambio }}</td>
                             </tr>
                         </tbody>
                     </table>           
@@ -211,23 +184,28 @@
                         <tbody>
                             <tr>
                                 <td class="table-dark"scope="col">Parcial</td>
-                                <td class="table-light text-end">$36.000</td>
+                                <td class="table-light text-end">${{ $parcial_factura }}</td>
                             </tr>
                             <tr>
                                 <td class="table-dark"scope="col">IVA 19%</td>
-                                <td class="table-light text-end">$6.840</td>
+                                <td class="table-light text-end">${{ $iva }}</td>
                             </tr>
                             <tr>
                                 <td class="table-dark"scope="col">Total</td>
-                                <td class="table-light text-end">$42.840</td>
+                                <td class="table-light text-end">${{ $total_factura }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="d-grid gap-2">
-                        <button class="btn btn-warning btn-lg"><i class="bi bi-receipt"></i> FACTURAR</button>
-                    </div>
+            <form action="{{ route('vendedor.store') }}" method="post">
+                @csrf
+                <input hidden name="vendedor" value="{{ auth()-> user()->id; }}">
+                <input hidden name="id_factura" value="{{ $id_fact }}" > 
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-warning btn-lg"><i class="bi bi-receipt"></i> FACTURAR</button>
+                </div>
+            </form>
             
             
         </div>
@@ -268,7 +246,7 @@
                 icon.className = "bi bi-fullscreen";
             }
         };
-    
+
     
     </script>
     
