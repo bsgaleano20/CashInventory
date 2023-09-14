@@ -4,7 +4,7 @@
 
 @section('content')
 
-!-- ++++++++++++++++++++++++++++++ Caja semitransparente +++++++++++++++++++++++++++++++ -->
+ <!-- ++++++++++++++++++++++++++++++ Caja semitransparente +++++++++++++++++++++++++++++++ -->
     <div class="cuadro_center"></div>
 
     <!-- ++++++++++++++++++++++++++++++ Contenedores Cajas semitransparentes +++++++++++++++++++++++++++++++ -->
@@ -16,19 +16,23 @@
             <!-- ++++++++++++++++++++++++++++++ OPCIONES +++++++++++++++++++++++++++++++ -->
             <br> <br> <br>
             <div class="col-7">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Factura">
-                    <select class="form-select">
-                        <option selected>Filtro</option>
-                        <option value="2">Número de factura</option>
-                        <option value="3">Fecha</option>
-                        <option value="4">Valor Total</option>
-                    </select>
-                    <button type="button" class="btn btn-warning" id="button-addon2">Buscar</button>
-                </div>
+                <form action="{{ route('historial_facturas.show') }}" method="post">
+                    @csrf
+                    <div class="input-group">
+                        <input type="text" name="busqueda" class="form-control" placeholder="Factura">
+                        <select class="form-select" name="filtro" required>
+                            <option disabled hidden>Filtro</option>
+                            <option value="id">Número de factura</option>
+                            <option value="created_at">Fecha</option>
+                            <option value="valor_total_factura">Valor Total</option>
+                        </select>
+                        <button type="submit" class="btn btn-warning" id="button-addon2">Buscar</button>
+                    </div>
+                </form>
+                
             </div>
             <div class="col-5">
-                <a class="btn btn-warning" role="button" href="home.php"><i class="bi bi-arrow-left-square-fill"></i> Volver al menú principal</a>
+                <a class="btn btn-warning" role="button" href="{{ route('vendedor') }}"><i class="bi bi-arrow-left-square-fill"></i> Volver al menú principal</a>
             </div>
 
             <br><br><br>
@@ -52,43 +56,6 @@
                 </div>
             </div>
 
-
-            <!-- ++++++++++++++++++++ Ventana Emergente de detalle +++++++++++++++++++++++ -->
-            <div class="modal fade" id="detalleFactura" tabindex="-1" aria-labelledby="detalleFacturaLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="eliminarUsuarioLabel">DETALLE FACTURA</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table table-light table-striped">
-                            <thead>
-                                <tr>
-                                    <th class="table-dark" scope="col">Producto</th>
-                                    <th class="table-dark"scope="col">Precio Unitario</th>
-                                    <th class="table-dark"scope="col">Cantidad</th>
-                                    <th class="table-dark"scope="col">Precio total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="table-light">
-                                    <td class="table-light">Marcador Sharpie</td>
-                                    <td class="table-light">$2.700</td>
-                                    <td class="table-light">1</td>
-                                    <td class="table-light">$2.700</td>
-                                </tr>
-                            </tbody>
-                            </table>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
-                    </div>
-                </div>
-            </div>
-
-
             <!-- +++++++++++++++++++++++++++++++ TABLA ++++++++++++++++++++++++++++++++++++++++ -->
             <div class="tabla scroll">
                 <table class="table table-light table-striped">
@@ -98,89 +65,26 @@
                                 <th class="table-dark" scope="col">Número de factura</th>
                                 <th class="table-dark" scope="col">Fecha</th>
                                 <th class="table-dark" scope="col">Valor Total</th>
-                                <th class="table-dark"scope="col">Valor Recibido</th>
-                                <th class="table-dark"scope="col">Valor Cambio</th>
+                                <th class="table-dark"scope="col">Cedula Vendedor</th>
                                 <th class="table-dark" scope="col">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="table-light">
-                                <td class="table-light">24522</td>
-                                <td class="table-light">21/11/2022</td>
-                                <td class="table-light">$ 15.300</td>
-                                <td class="table-light">$ 15.300</td>
-                                <td class="table-light">$ 0</td>
-                                <td class="table-light">
-                                    <a type="button" href="crear_usuario.php" data-bs-toggle="modal" data-bs-target="#detalleFactura" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Detalle</a>
-                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuario"><i class="bi bi-x-lg"></i> Cancelar</a>  
-                                </td>
-                            </tr>
-                            <tr class="table-light">
-                                <td class="table-light">24523</td>
-                                <td class="table-light">21/11/2022</td>
-                                <td class="table-light">$ 2.700</td>
-                                <td class="table-light">$ 5.000</td>
-                                <td class="table-light">$ 2.300</td>
-                                <td class="table-light">
-                                    <a type="button" href="crear_usuario.php" data-bs-toggle="modal" data-bs-target="#detalleFactura" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Detalle</a>
-                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuario"><i class="bi bi-x-lg"></i> Cancelar</a>  
-                                </td>
-                            </tr>
-                            <tr class="table-light">
-                                <td class="table-light">24524</td>
-                                <td class="table-light">21/11/2022</td>
-                                <td class="table-light">$ 26.100</td>
-                                <td class="table-light">$ 30.000</td>
-                                <td class="table-light">$ 3.900</td>
-                                <td class="table-light">
-                                    <a type="button" href="crear_usuario.php" data-bs-toggle="modal" data-bs-target="#detalleFactura" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Detalle</a>
-                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuario"><i class="bi bi-x-lg"></i> Cancelar</a>  
-                                </td> 
-                            </tr>
-                            <tr class="table-light">
-                                <td class="table-light">24525</td>
-                                <td class="table-light">21/11/2022</td>
-                                <td class="table-light">$ 34.900</td>
-                                <td class="table-light">$ 50.000</td>
-                                <td class="table-light">$ 15.100</td>
-                                <td class="table-light">
-                                    <a type="button" href="crear_usuario.php" data-bs-toggle="modal" data-bs-target="#detalleFactura" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Detalle</a>
-                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuario"><i class="bi bi-x-lg"></i> Cancelar</a>  
-                                </td>
-                            </tr>
-                            <tr class="table-light">
-                                <td class="table-light">24526</td>
-                                <td class="table-light">21/11/2022</td>
-                                <td class="table-light">$ 1.000</td>
-                                <td class="table-light">$ 1.000</td>
-                                <td class="table-light">$ 0</td>
-                                <td class="table-light">
-                                    <a type="button" href="crear_usuario.php" data-bs-toggle="modal" data-bs-target="#detalleFactura" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Detalle</a>
-                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuario"><i class="bi bi-x-lg"></i> Cancelar</a>  
-                                </td>
-                            </tr>
-                            <tr class="table-light">
-                                <td class="table-light">24527</td>
-                                <td class="table-light">22/11/2022</td>
-                                <td class="table-light">$ 700</td>
-                                <td class="table-light">$ 1.000</td>
-                                <td class="table-light">$ 300</td>
-                                <td class="table-light">
-                                    <a type="button" href="crear_usuario.php" data-bs-toggle="modal" data-bs-target="#detalleFactura" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Detalle</a>
-                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuario"><i class="bi bi-x-lg"></i> Cancelar</a>  
-                                </td>
-                            </tr>
-                            <tr class="table-light">
-                                <td class="table-light">24528</td>
-                                <td class="table-light">22/11/2022</td>
-                                <td class="table-light">$ 2.500</td>
-                                <td class="table-light">$ 10.000</td>
-                                <td class="table-light">$ 7.500</td>
-                                <td class="table-light">
-                                    <a type="button" href="crear_usuario.php" data-bs-toggle="modal" data-bs-target="#detalleFactura" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Detalle</a>
-                                    <a type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuario"><i class="bi bi-x-lg"></i> Cancelar</a>  
-                                </td>
-                            </tr>
+                            @foreach ($facturas as $factura)
+                                <tr class="table-light">
+                                    <td class="table-light">{{ $factura->id }}</td>
+                                    <td class="table-light">{{ $factura->created_at}}</td>
+                                    <td class="table-light">$ {{ $factura->valor_total_factura }}</td>
+                                    <td class="table-light">{{ $factura->Vendedor_id_usuario }}</td>
+                                    <td class="table-light">
+                                        <form action="{{ route('historial_facturas.detalle_factura', $factura->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Detalle</button>
+                                        </form>
+                                        
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </div>
                 </table>

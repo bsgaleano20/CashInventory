@@ -12,7 +12,7 @@ use PhpParser\Node\Stmt\Else_;
 class FacturaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar vista de ventas 
      */
     public function index(Request $request)
     {
@@ -58,8 +58,10 @@ class FacturaController extends Controller
                 ->where('detallefactura.Factura_id_factura', '=', $id_fact)
                 ->get();
 
+        // Se setea el valor inicial parcial
         $parcial_factura = 0;
 
+        // Si la factura no tiene productos aun agregados se mantienen los valores iniciales 
         if(empty($detalle_facturas[0])){
             $parcial_factura = 0;
             $iva = 0;
@@ -68,20 +70,27 @@ class FacturaController extends Controller
 
         }
         else{
+
+            // De lo contrario si ya se tienen productos en la factura se recorren y se suman sus precios
             foreach($detalle_facturas as $detalle_factura){
                 $parcial_factura = $parcial_factura + $detalle_factura->total;
             }
-    
+            
+            // Se multiplica el valor parcial por IVA del 19%
             $iva = $parcial_factura * 0.19;
+
+            // Se suma el valor pacial mas el IVA
             $total_factura = $parcial_factura + $iva;
 
+            // Se agrega el valor total a la BDD
             Factura::where('id', $id_fact)
                 ->update([
                     'valor_total_factura' => $total_factura
                 ]);
-
+            
             $factura = Factura::find($id_fact);
-
+            
+            // Se setea el valor de cambio para mostrarse en la vista
             $valor_cambio = $factura->cambio_factura;
         }
 
@@ -94,80 +103,111 @@ class FacturaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * ELIMINAR PRODUCTOS DE UNA FACTURA
      */
     public function create(Request $request)
     {
+        // Se extrae con query el producto que se desea eliminar de la factura y se borra el registro
         DetalleFactura::query()
             ->select("*")
             ->where('Producto_id_producto', $request->id_producto_eliminar)
             ->where('Factura_id_factura', $request->id_factura_eliminar)
             ->delete();
         
-
+        // Se retorna vista
         return redirect()->route('vendedor')->with('editar_producto', 'Producto eliminado correctamente');
 
     }
 
     /**
-     * Store a newly created resource in storage.
+     * CREAR UNA FACTURA (ACTUALIZAR FACTURA TEMPORAL)
      */
     public function store(Request $request)
     {
+        // Se actualiza factura para que pase de ser temporal a definitiva, y se registra el usuario con el que se realizó la venta
         Factura::where('id', $request->id_factura)
             ->update ([
                 'Vendedor_id_usuario' => $request->vendedor,
                 'estado' => 'completado' 
             ]);
 
+        // Se realiza un query de productos agregados a la factura
+        $detalle_productos = DetalleFactura::query()
+                ->select("*")
+                ->where('Factura_id_factura', $request->id_factura)
+                ->get();
+
+        // Se recorre el query donde por cada producto se descuenta la cantidad llevada del inventario.
+        foreach($detalle_productos as $detalle_producto){
+            $cantidad_producto = Producto::find($detalle_producto->Producto_id_producto);
+            $nuevo_total = $cantidad_producto->cantidad_disponible_t - $detalle_producto->cantidad_producto_factura;
+
+            Producto::where('id', $detalle_producto->Producto_id_producto)
+                ->update([
+                    'cantidad_disponible_t'=> $nuevo_total
+                ]);
+        };
+
+        // Se retorna vista principal
         return redirect()->route('vendedor')->with('editar_producto', 'Factura completada correctamente');
     }
 
     /**
-     * Display the specified resource.
+     * MOSTRAR VALOR DE VUELTAS O CAMBIO
      */
     public function show(Request $request)
     {
+        // se busca la factura por ID
         $factura = Factura::find( $request->id_factura );
 
+        // Se resta al valor recibido el valor de la factura arrojando la cantidad del vuelto
         $valor_cambio = $request->valor_recibido - $factura->valor_total_factura;
 
+        // Se registra información en la BDD
         Factura::where('id', $request->id_factura)
             ->update([
                 'valor_recibido_factura' => $request->valor_recibido,
                 'cambio_factura' => $valor_cambio
             ]);
 
+        // Se retorna vista
         return redirect()->route('vendedor');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * AGREGAR PRODUCTO A FACTURA
      */
     public function edit(Request $request)
     {
+
+        // Buscar producto en BDD por codigo de barras        
         $productos = Producto::query()
             ->select("*")
             ->where('codigo_barras', "=", $request->codigo_barras)
             ->get();
 
+        // Extraemos precio y id del producto de la BDD
         foreach($productos as $producto){
             $producto_id = $producto->id;
             $producto_precio = $producto->precio_unitario;
         }
 
+        //Query buscando un registro que ya tenga ese id de producto y ese id de factura
         $detalle_facturas = DetalleFactura::query()
             ->select("*")
             ->where('Producto_id_producto', $producto_id)
             ->where('Factura_id_factura', $request->id_factura)
             ->get();
 
+        // Si el producto no existe en la BDD dentro de la factura editable se realiza una segunda validación
         if(empty($detalle_facturas[0])){
+            // Se valida si el producto existe en la BDD, en caso de no ser asi se arroja alerta
             if(empty($productos[0])){
                 return redirect()->route('vendedor')->with('agregar_producto', 'Producto no encontrado');
             }
+            // Si existe y no ha sido agregado anteriormente se añade a detallefactura y se redirecciona a la vista principal
             else{
-    
+                // Si encuentra el producto
                 DetalleFactura::create([
                     'Producto_id_producto' => $producto_id,
                     'Factura_id_factura' => $request->id_factura,
@@ -179,6 +219,7 @@ class FacturaController extends Controller
             }
         }
         else{
+            //Si el producto ya había sido agregado para evitar duplicidad de IDS y violación de llaves foraneas se arroja una alerta
             return redirect()->route('vendedor')->with('agregar_producto', 'Producto ya agregado');
         }
 
@@ -186,12 +227,14 @@ class FacturaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * CAMBIAR LA CANTIDAD DE PRODUCTOS
      */
     public function update(Request $request)
     {
+        // Se multiplica el valor total del producto por la cantidad de elementos llevados
         $total = $request->cantidad_producto_factura * $request->precio_unitario;
 
+        // Se actualizan cantidades en la BDD
         DetalleFactura::where('Producto_id_producto', $request->id_producto)
             ->where('Factura_id_factura', $request->id_factura)
             ->update([
@@ -199,19 +242,23 @@ class FacturaController extends Controller
                 'total' => $total
             ]);
 
+        // Se retorna vista principal
         return redirect()->route('vendedor')->with('editar_producto', 'Producto actualizado correctamente'); 
 
     }
 
     /**
-     * Remove the specified resource from storage.
+     * ELIMINAR O CANCELAR FACTURA
      */
     public function destroy(string $id)
     {
+        // Se busca la factura por su ID
         $registro = Factura::find($id);
 
+        // Se elimina el registro encontrado
         $registro->delete();
 
+        // Se retorna vista principal
         return redirect()->route('vendedor')->with('editar_producto', 'Factura eliminada correctamente');
     }
 }

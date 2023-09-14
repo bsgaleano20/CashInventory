@@ -9,6 +9,7 @@ use App\Http\Controllers\DetalleMovimientoController;
 use App\Http\Controllers\AutorizacionController;
 use App\Http\Controllers\BuscarProductoController;
 use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\HistorialFacturaController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -182,7 +183,7 @@ Route::post('/vendedor/home/eliminar_producto', [FacturaController::class, 'crea
 Route::post('/vendedor/home/eliminar_factura/{id}', [FacturaController::class, 'destroy'])
 ->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.destroy');
 
-// Buscar producto
+// Buscar producto VENTAS
 
 Route::get('/buscar_productos',[BuscarProductoController::class, 'index'])
 ->middleware(['auth', 'verified'])->middleware('role:2')->name('buscar_producto.index');
@@ -190,8 +191,16 @@ Route::get('/buscar_productos',[BuscarProductoController::class, 'index'])
 Route::post('/buscar_productos',[BuscarProductoController::class, 'show'])
 ->middleware(['auth', 'verified'])->middleware('role:2')->name('buscar_producto.show');
 
+// Historial de facturas VENTAS
 
+Route::get('/historial_facturas',[HistorialFacturaController::class, '__invoke'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('historial_facturas.invoke');
 
+Route::post('/historial_facturas',[HistorialFacturaController::class, 'show'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('historial_facturas.show');
+
+Route::post('/historial_facturas/detalle/{id}',[HistorialFacturaController::class, 'detalle_factura'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('historial_facturas.detalle_factura');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
