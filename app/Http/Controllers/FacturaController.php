@@ -7,6 +7,7 @@ use App\Models\Factura;
 use App\Models\DetalleFactura;
 use App\Models\Usuario;
 use App\Models\Producto;
+use Barryvdh\DomPDF\Facade\Pdf;
 use PhpParser\Node\Stmt\Else_;
 
 class FacturaController extends Controller
@@ -261,4 +262,66 @@ class FacturaController extends Controller
         // Se retorna vista principal
         return redirect()->route('vendedor')->with('editar_producto', 'Factura eliminada correctamente');
     }
-}
+
+
+    public function downloadPDF()
+    {
+        // Realizamos busqueda nuevamente dado que creamos un registro en la BDD
+        $facturas_temp = Factura::query()
+            ->select("*")
+            ->where('estado', "=", 'temporal')
+            ->get();
+
+        // Recorremos el query con las facturas temporales creadas
+        foreach($facturas_temp as $factura_temp){
+            $id_fact = $factura_temp->id;
+            $valor_total = $factura_temp->valor_total_factura;
+            $valor_recibido = $factura_temp->valor_recibido_factura;
+            $cambio = $factura_temp->cambio_factura;
+        }
+
+        // Realiza un innerjoin con la información de detalle factura y producto
+        $detalle_facturas = DetalleFactura::select('producto.nombre_producto',
+                'producto.codigo_barras',
+                'producto.precio_unitario',
+                'detallefactura.Producto_id_producto', 
+                'detallefactura.Factura_id_factura',
+                'detallefactura.cantidad_producto_factura',
+                'detallefactura.precio_unitario',
+                'detallefactura.total')
+                ->join('producto', 'detallefactura.Producto_id_producto', '=', 'producto.id')
+                ->where('detallefactura.Factura_id_factura', '=', $id_fact)
+                ->get();
+                
+        // Se setea el valor inicial parcial
+        $parcial_factura = 0;
+
+        // Si la factura no tiene productos aun agregados se mantienen los valores iniciales 
+        if(empty($detalle_facturas[0])){
+            $parcial_factura = 0;
+            $iva = 0;
+            $total_factura = 0;
+            $valor_cambio = 0;
+
+        }
+        else{
+
+            // De lo contrario si ya se tienen productos en la factura se recorren y se suman sus precios
+            foreach($detalle_facturas as $detalle_factura){
+                $parcial_factura = $parcial_factura + $detalle_factura->total;
+            }
+            
+            // Se multiplica el valor parcial por IVA del 19%
+            $iva = $parcial_factura * 0.19;
+
+            // Se suma el valor pacial mas el IVA
+            $total_factura = $parcial_factura + $iva;
+
+        }
+
+        $pdf = PDF::loadview('/vendedor/imprimir', compact('id_fact', 'detalle_facturas', 'valor_total', 'iva', 'parcial_factura', 'total_factura', 'cambio'));
+
+        return $pdf->stream();
+    }    
+
+}    

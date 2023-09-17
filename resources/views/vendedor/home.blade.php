@@ -80,12 +80,11 @@
         
         <div class="cuadro_right_white_container scroll">
             <div class="row">
-                <div class="col-9">
+                <div class="col-10">
                     <h3 class="text-center titulo_modulo_black">Factura #{{ $id_fact }}</h3><br>  
                 </div>
-                <div class="col-3 text-end">
-                    <button class="btn btn-warning"><i class="bi bi-printer-fill"></i></button>
-                    <button class="btn btn-warning"><i class="bi bi-file-earmark-arrow-down-fill"></i> </button>
+                <div class="col-2 text-end">
+                    <form action="{{ route('vendedor.downloadPDF') }}" method="get"><button class="btn btn-warning" type="submit"><i class="bi bi-printer-fill"></i></button></form>       
                 </div>
             </div>
                 

@@ -10,6 +10,9 @@ use App\Http\Controllers\AutorizacionController;
 use App\Http\Controllers\BuscarProductoController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\HistorialFacturaController;
+use App\Http\Controllers\HomeAdminController;
+use App\Http\Controllers\HomeBodeguistaController;
+use App\Http\Controllers\ReportesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,17 +40,11 @@ Route::get('/error401', function () {
     return view('Acceso_no_autorizado');
 })->middleware(['auth', 'verified'])->name('error401');
 
-Route::get('/administrador/home', function () {
-    return view('/administrador/home');
-})->middleware(['auth', 'verified'])->middleware('role:1')->name('administrador');
+Route::get('/administrador/home', [HomeAdminController::class, '__invoke'])
+->middleware(['auth', 'verified'])->middleware('role:1')->name('administrador');
 
-Route::get('/bodeguista/home', function () {
-    return view('/bodeguista/home');
-})->middleware(['auth', 'verified'])->middleware('role:3')->name('bodeguista');
-
-// Route::get('/vendedor/home', function () {
-//     return view('/vendedor/home');
-// })->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor');
+Route::get('/bodeguista/home', [HomeBodeguistaController::class, '__invoke'])
+->middleware(['auth', 'verified'])->middleware('role:3')->name('bodeguista');
 
 Route::get('/vendedor/home', [FacturaController::class, 'index'])
 ->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor');
@@ -100,7 +97,10 @@ Route::post('/gestion_inventario/editar_producto/{id}',[InventarioController::cl
 Route::post('/gestion_inventario/{id}',[InventarioController::class, 'destroy'])
 ->middleware(['auth', 'verified'])->middleware('role:1,3')->name('gestion_inventario.destroy');
 
+// Gestion de Reportes
 
+Route::get('/reportes',[ReportesController::class, '__invoke'])
+->middleware(['auth', 'verified'])->middleware('role:1')->name('reportes.invoke');
 
 // Gestion de Autorizaciones Controller
 
@@ -182,6 +182,9 @@ Route::post('/vendedor/home/eliminar_producto', [FacturaController::class, 'crea
 
 Route::post('/vendedor/home/eliminar_factura/{id}', [FacturaController::class, 'destroy'])
 ->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.destroy');
+
+Route::get('/vendedor/home/descargar_pdf', [FacturaController::class, 'downloadPDF'])
+->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor.downloadPDF');
 
 // Buscar producto VENTAS
 
