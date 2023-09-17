@@ -118,6 +118,17 @@ a:hover{
     opacity: 0.6;
 }
 
+.cuadro_right_white_2{
+    position: absolute;
+    width: 50vw;
+    height: 75vh;
+    background-color: #dadada;
+    margin-top:5%;
+    margin-left: 45vw;
+    opacity: 0.6;
+}
+
+
 .cuadro_right_container{
     position: absolute;
     width: 45vw;
@@ -227,6 +238,12 @@ a:hover{
 .titulo_modulo{
     font-size: 45px;
     color: white;
+    text-align: center;
+}
+
+.titulo_modulo_black_1{
+    font-size: 45px;
+    color: black;
     text-align: center;
 }
 

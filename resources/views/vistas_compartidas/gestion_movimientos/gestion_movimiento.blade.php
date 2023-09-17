@@ -45,7 +45,13 @@
                     </div>
                     <div class="col-5">
                         <a class="btn btn-warning" role="button" href="/gestion_movimientos/crear_movimiento"><i class="bi bi-truck-front-fill"></i> Crear Movimiento</a>
-                        <a class="btn btn-warning" role="button" href="/administrador/home"><i class="bi bi-arrow-left-square-fill"></i> Volver al menú principal</a>
+                        @if(Auth::check())
+                            @if(Auth::user()->Rol_id_rol === 1)
+                                <a class="btn btn-warning" role="button" href="/administrador/home"><i class="bi bi-arrow-left-square-fill"></i> Volver al menú principal</a>
+                            @elseif(Auth::user()->Rol_id_rol === 3)
+                                <a class="btn btn-warning" role="button" href="/bodeguista/home"><i class="bi bi-arrow-left-square-fill"></i> Volver al menú principal</a>
+                            @endif
+                        @endif
                     </div>
 
                     <br><br><br>

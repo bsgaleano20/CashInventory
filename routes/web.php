@@ -102,6 +102,12 @@ Route::post('/gestion_inventario/{id}',[InventarioController::class, 'destroy'])
 Route::get('/reportes',[ReportesController::class, '__invoke'])
 ->middleware(['auth', 'verified'])->middleware('role:1')->name('reportes.invoke');
 
+Route::get('/reportes/productos_mas_vendidos',[ReportesController::class, 'productos_mas_vendidos'])
+->middleware(['auth', 'verified'])->middleware('role:1')->name('reportes.productos_mas_vendidos');
+
+Route::get('/reportes/vendedores',[ReportesController::class, 'vendedores'])
+->middleware(['auth', 'verified'])->middleware('role:1')->name('reportes.vendedores');
+
 // Gestion de Autorizaciones Controller
 
 Route::get('/autorizaciones',[AutorizacionController::class, 'index'])

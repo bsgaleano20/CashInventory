@@ -8,7 +8,6 @@ use App\Models\DetalleFactura;
 use App\Models\Usuario;
 use App\Models\Producto;
 use Barryvdh\DomPDF\Facade\Pdf;
-use PhpParser\Node\Stmt\Else_;
 
 class FacturaController extends Controller
 {
