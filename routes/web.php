@@ -13,6 +13,7 @@ use App\Http\Controllers\HistorialFacturaController;
 use App\Http\Controllers\HomeAdminController;
 use App\Http\Controllers\HomeBodeguistaController;
 use App\Http\Controllers\ReportesController;
+use App\Http\Controllers\MiPerfilController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,9 +50,11 @@ Route::get('/bodeguista/home', [HomeBodeguistaController::class, '__invoke'])
 Route::get('/vendedor/home', [FacturaController::class, 'index'])
 ->middleware(['auth', 'verified'])->middleware('role:2')->name('vendedor');
 
-Route::get('/mi_perfil', function () {
-    return view('vistas_compartidas/mi_perfil');
-})->middleware(['auth', 'verified'])->name('mi_perfil');
+Route::get('/mi_perfil', [MiPerfilController::class, 'index'])
+->middleware(['auth', 'verified'])->name('mi_perfil');
+
+Route::post('/mi_perfil', [MiPerfilController::class, 'update'])
+->middleware(['auth', 'verified'])->name('mi_perfil.update');
 
 
 
