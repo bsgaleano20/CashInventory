@@ -29,7 +29,11 @@ use Illuminate\Support\Facades\Auth;
 */
 
 // Route::view('/', 'index')->name('index');
-Route::view('/login', 'login')->name('login');
+// Route::view('/login', 'login')->name('login');
+
+Route::get('/login', function () {
+    return view('auth/login');
+})->name('login');
 
 Route::get('/', function () {
     return view('welcome');
