@@ -26,7 +26,7 @@
                             <a class="nav-link " href="#soluciones">Soluciones</a>
                             <a class="nav-link " href="#nosotros">Nosotros</a>
                             <a class="nav-link " href="#contactanos">Contactanos</a>
-                            <a href="{{ route('login') }}" class="btn btn-warning iniciar_sesion" role="button" data-bs-toggle="button">Iniciar sesion</a>
+                            <a href="{{ route('login.vista') }}" class="btn btn-warning iniciar_sesion" role="button" data-bs-toggle="button">Iniciar sesion</a>
                         </div>
                     </div>
                 </div>

@@ -31,9 +31,9 @@ use Illuminate\Support\Facades\Auth;
 // Route::view('/', 'index')->name('index');
 // Route::view('/login', 'login')->name('login');
 
-Route::get('/login', function () {
+Route::get('/ingreso', function () {
     return view('auth/login');
-})->name('login');
+})->name('login.vista');
 
 Route::get('/', function () {
     return view('welcome');
